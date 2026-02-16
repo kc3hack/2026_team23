@@ -4,7 +4,7 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
  
@@ -24,6 +24,7 @@ model User {
   // Optional for WebAuthn support
   Authenticator Authenticator[]
   projects      ProjectMember[] 
+  groupMembers GroupMember[]
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -87,7 +88,7 @@ model Authenticator {
 }
 
 // 1. User テーブル (ユーザー情報)
-
+//Google認証で作成されたUserテーブルを利用するためここは省略しますかーー
 
 
 // 2. Project テーブル (旅行自体の情報)
@@ -98,6 +99,9 @@ model Project {
   title         String          // 例: "卒業旅行", "冬の温泉" など
   departureDate DateTime        // 出発日程 (アプリ側で3ヶ月後にバリデーション)
   
+  //グループ情報追加
+  groupId      String?
+  group        Group?          @relation(fields: [groupId], references: [id],onDelete: SetNull)
   // このプロジェクトに参加するメンバー（中間テーブルへのリレーション）
   members       ProjectMember[] 
 
@@ -130,6 +134,41 @@ model ProjectMember {
   @@unique([projectId, userId]) 
 }
 
+//-------
+// 4. グループテーブル作成(グループを一括で登録できるようにするため)
+//---------
+model Group {
+  id    String  @id @default(uuid())
+  name  String //大学の友達みたいな感じのグループ名が入るかな
+  description String? //説明(?つくやつは任意でなくてもOK)
+
+  members  GroupMember[] //所属メンバー
+  projects Project[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//5. GroupMemberテーブル(UserとGroupの中間テーブル)
+
+model GroupMember {
+  id     String @id @default(uuid())
+
+  groupId String 
+  userId  String
+
+  group Group @relation(fields:[groupId],references:[id],onDelete:Cascade)
+  user  User  @relation(fields:[userId], references: [id], onDelete:Cascade)
+
+  role GroupRole @default(MEMBER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([groupId,userId])
+}
+
+
 // --------------------------------------------------
 // Enum (列挙型) - 取りうる値を固定して安全にする
 // --------------------------------------------------
@@ -142,4 +181,9 @@ enum Status {
   PENDING   // 通知済み・未回答 (デフォルト)
   ACCEPTED  // はい (参加)
   DECLINED  // いいえ (不参加)
+}
+
+enum GroupRole {
+  ADMIN   //グループの管理者
+  MEMBER //招待を受けるメンバー
 }

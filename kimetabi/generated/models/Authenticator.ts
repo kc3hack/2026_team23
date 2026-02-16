@@ -514,6 +514,7 @@ export type AuthenticatorCreateOrConnectWithoutUserInput = {
 
 export type AuthenticatorCreateManyUserInputEnvelope = {
   data: Prisma.AuthenticatorCreateManyUserInput | Prisma.AuthenticatorCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type AuthenticatorUpsertWithWhereUniqueWithoutUserInput = {
@@ -1321,6 +1322,7 @@ export type AuthenticatorCreateManyArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many Authenticators.
    */
   data: Prisma.AuthenticatorCreateManyInput | Prisma.AuthenticatorCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1339,6 +1341,7 @@ export type AuthenticatorCreateManyAndReturnArgs<ExtArgs extends runtime.Types.E
    * The data used to create many Authenticators.
    */
   data: Prisma.AuthenticatorCreateManyInput | Prisma.AuthenticatorCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

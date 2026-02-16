@@ -202,6 +202,7 @@ export type UserWhereInput = {
   sessions?: Prisma.SessionListRelationFilter
   Authenticator?: Prisma.AuthenticatorListRelationFilter
   projects?: Prisma.ProjectMemberListRelationFilter
+  groupMembers?: Prisma.GroupMemberListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -216,6 +217,7 @@ export type UserOrderByWithRelationInput = {
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   Authenticator?: Prisma.AuthenticatorOrderByRelationAggregateInput
   projects?: Prisma.ProjectMemberOrderByRelationAggregateInput
+  groupMembers?: Prisma.GroupMemberOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -233,6 +235,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   sessions?: Prisma.SessionListRelationFilter
   Authenticator?: Prisma.AuthenticatorListRelationFilter
   projects?: Prisma.ProjectMemberListRelationFilter
+  groupMembers?: Prisma.GroupMemberListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -273,6 +276,7 @@ export type UserCreateInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   Authenticator?: Prisma.AuthenticatorCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput
+  groupMembers?: Prisma.GroupMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -287,6 +291,7 @@ export type UserUncheckedCreateInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   Authenticator?: Prisma.AuthenticatorUncheckedCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput
+  groupMembers?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -301,6 +306,7 @@ export type UserUpdateInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   Authenticator?: Prisma.AuthenticatorUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput
+  groupMembers?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -315,6 +321,7 @@ export type UserUncheckedUpdateInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   Authenticator?: Prisma.AuthenticatorUncheckedUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput
+  groupMembers?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -454,6 +461,20 @@ export type UserUpdateOneRequiredWithoutProjectsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProjectsInput, Prisma.UserUpdateWithoutProjectsInput>, Prisma.UserUncheckedUpdateWithoutProjectsInput>
 }
 
+export type UserCreateNestedOneWithoutGroupMembersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGroupMembersInput, Prisma.UserUncheckedCreateWithoutGroupMembersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGroupMembersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutGroupMembersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGroupMembersInput, Prisma.UserUncheckedCreateWithoutGroupMembersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGroupMembersInput
+  upsert?: Prisma.UserUpsertWithoutGroupMembersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGroupMembersInput, Prisma.UserUpdateWithoutGroupMembersInput>, Prisma.UserUncheckedUpdateWithoutGroupMembersInput>
+}
+
 export type UserCreateWithoutAccountsInput = {
   id?: string
   name?: string | null
@@ -465,6 +486,7 @@ export type UserCreateWithoutAccountsInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   Authenticator?: Prisma.AuthenticatorCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput
+  groupMembers?: Prisma.GroupMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -478,6 +500,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   Authenticator?: Prisma.AuthenticatorUncheckedCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput
+  groupMembers?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -507,6 +530,7 @@ export type UserUpdateWithoutAccountsInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   Authenticator?: Prisma.AuthenticatorUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput
+  groupMembers?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -520,6 +544,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   Authenticator?: Prisma.AuthenticatorUncheckedUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput
+  groupMembers?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -533,6 +558,7 @@ export type UserCreateWithoutSessionsInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   Authenticator?: Prisma.AuthenticatorCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput
+  groupMembers?: Prisma.GroupMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -546,6 +572,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   Authenticator?: Prisma.AuthenticatorUncheckedCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput
+  groupMembers?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -575,6 +602,7 @@ export type UserUpdateWithoutSessionsInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   Authenticator?: Prisma.AuthenticatorUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput
+  groupMembers?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -588,6 +616,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   Authenticator?: Prisma.AuthenticatorUncheckedUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput
+  groupMembers?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAuthenticatorInput = {
@@ -601,6 +630,7 @@ export type UserCreateWithoutAuthenticatorInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput
+  groupMembers?: Prisma.GroupMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAuthenticatorInput = {
@@ -614,6 +644,7 @@ export type UserUncheckedCreateWithoutAuthenticatorInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput
+  groupMembers?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAuthenticatorInput = {
@@ -643,6 +674,7 @@ export type UserUpdateWithoutAuthenticatorInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput
+  groupMembers?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuthenticatorInput = {
@@ -656,6 +688,7 @@ export type UserUncheckedUpdateWithoutAuthenticatorInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput
+  groupMembers?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProjectsInput = {
@@ -669,6 +702,7 @@ export type UserCreateWithoutProjectsInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   Authenticator?: Prisma.AuthenticatorCreateNestedManyWithoutUserInput
+  groupMembers?: Prisma.GroupMemberCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProjectsInput = {
@@ -682,6 +716,7 @@ export type UserUncheckedCreateWithoutProjectsInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   Authenticator?: Prisma.AuthenticatorUncheckedCreateNestedManyWithoutUserInput
+  groupMembers?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProjectsInput = {
@@ -711,6 +746,7 @@ export type UserUpdateWithoutProjectsInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   Authenticator?: Prisma.AuthenticatorUpdateManyWithoutUserNestedInput
+  groupMembers?: Prisma.GroupMemberUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProjectsInput = {
@@ -724,6 +760,79 @@ export type UserUncheckedUpdateWithoutProjectsInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   Authenticator?: Prisma.AuthenticatorUncheckedUpdateManyWithoutUserNestedInput
+  groupMembers?: Prisma.GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutGroupMembersInput = {
+  id?: string
+  name?: string | null
+  email?: string | null
+  emailVerified?: Date | string | null
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  Authenticator?: Prisma.AuthenticatorCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectMemberCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutGroupMembersInput = {
+  id?: string
+  name?: string | null
+  email?: string | null
+  emailVerified?: Date | string | null
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  Authenticator?: Prisma.AuthenticatorUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutGroupMembersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutGroupMembersInput, Prisma.UserUncheckedCreateWithoutGroupMembersInput>
+}
+
+export type UserUpsertWithoutGroupMembersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutGroupMembersInput, Prisma.UserUncheckedUpdateWithoutGroupMembersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutGroupMembersInput, Prisma.UserUncheckedCreateWithoutGroupMembersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutGroupMembersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutGroupMembersInput, Prisma.UserUncheckedUpdateWithoutGroupMembersInput>
+}
+
+export type UserUpdateWithoutGroupMembersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  Authenticator?: Prisma.AuthenticatorUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectMemberUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutGroupMembersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  Authenticator?: Prisma.AuthenticatorUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectMemberUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -736,6 +845,7 @@ export type UserCountOutputType = {
   sessions: number
   Authenticator: number
   projects: number
+  groupMembers: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -743,6 +853,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   Authenticator?: boolean | UserCountOutputTypeCountAuthenticatorArgs
   projects?: boolean | UserCountOutputTypeCountProjectsArgs
+  groupMembers?: boolean | UserCountOutputTypeCountGroupMembersArgs
 }
 
 /**
@@ -783,6 +894,13 @@ export type UserCountOutputTypeCountProjectsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.ProjectMemberWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountGroupMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GroupMemberWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -796,6 +914,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   Authenticator?: boolean | Prisma.User$AuthenticatorArgs<ExtArgs>
   projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
+  groupMembers?: boolean | Prisma.User$groupMembersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -835,6 +954,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   Authenticator?: boolean | Prisma.User$AuthenticatorArgs<ExtArgs>
   projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
+  groupMembers?: boolean | Prisma.User$groupMembersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -847,6 +967,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     Authenticator: Prisma.$AuthenticatorPayload<ExtArgs>[]
     projects: Prisma.$ProjectMemberPayload<ExtArgs>[]
+    groupMembers: Prisma.$GroupMemberPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1254,6 +1375,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Authenticator<T extends Prisma.User$AuthenticatorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$AuthenticatorArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthenticatorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   projects<T extends Prisma.User$projectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  groupMembers<T extends Prisma.User$groupMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$groupMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1519,6 +1641,7 @@ export type UserCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * The data used to create many Users.
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1537,6 +1660,7 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many Users.
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1769,6 +1893,30 @@ export type User$projectsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.ProjectMemberScalarFieldEnum | Prisma.ProjectMemberScalarFieldEnum[]
+}
+
+/**
+ * User.groupMembers
+ */
+export type User$groupMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GroupMember
+   */
+  select?: Prisma.GroupMemberSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the GroupMember
+   */
+  omit?: Prisma.GroupMemberOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GroupMemberInclude<ExtArgs> | null
+  where?: Prisma.GroupMemberWhereInput
+  orderBy?: Prisma.GroupMemberOrderByWithRelationInput | Prisma.GroupMemberOrderByWithRelationInput[]
+  cursor?: Prisma.GroupMemberWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GroupMemberScalarFieldEnum | Prisma.GroupMemberScalarFieldEnum[]
 }
 
 /**

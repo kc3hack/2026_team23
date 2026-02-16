@@ -79,3 +79,13 @@ export type Project = Prisma.ProjectModel
  * 
  */
 export type ProjectMember = Prisma.ProjectMemberModel
+/**
+ * Model Group
+ * 
+ */
+export type Group = Prisma.GroupModel
+/**
+ * Model GroupMember
+ * 
+ */
+export type GroupMember = Prisma.GroupMemberModel
