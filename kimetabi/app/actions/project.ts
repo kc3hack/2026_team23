@@ -16,22 +16,51 @@ export async function createProject(formData: FormData) {
   // 2.フォームから送信されたデータを受理
   const title = formData.get("title") as string
   const departureDate = formData.get("departureDate") as string
+  //追加でgroupIdも受け取る
+  const groupId = formData.get("groupId") as string | null
 
   if (!title || !departureDate) {
     throw new Error("タイトルと出発日は必須です")
   }
 
+  type memberData = {
+    userId: string
+    role: "MASTER" | "PARTICIPANT"
+    status: "PENDING" | "ACCEPTED" | "DECLINED"
+  }
+  let membersData: memberData[] = []
+
+  if (groupId) {
+    const groupMembers = await prisma.groupMember.findMany({
+      where: {
+        groupId: groupId
+      }
+    })
+    //ProjectMember用のデータに変換を行う
+    membersData = groupMembers.map((member) => ({
+      userId: member.userId,
+      role: member.userId === userId ? "MASTER" : "PARTICIPANT",
+      status: member.userId === userId ? "ACCEPTED" : "PENDING"
+    }))
+  } else {
+    //単発旅行の時(作成者だけを登録)
+    membersData = [{
+      userId: userId,
+      role: "MASTER",
+      status: "ACCEPTED",
+    }]
+  }
+
   //3. prismaのネスト書き込みで旅行とメンバーを同時
-  const newProject = await prisma.project.create({
+  await prisma.project.create({
     data: {
       title: title,
       departureDate: new Date(departureDate),
+      groupId: groupId || null,
 
       members: {
-        create: {
-          userId: userId,
-          role: "MASTER", //主催者として参加
-          status: "ACCEPTED"
+        createMany: {
+          data: membersData
         }
       }
     }
