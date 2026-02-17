@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans } from "next/font/google";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { auth, signOut } from "@/auth"
+import { auth } from "@/auth"
 import { redirect } from "next/navigation";
 
 const notoSans = Noto_Sans({ variable: '--font-sans' });
@@ -38,12 +38,12 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <header>
-          <div className="h-10 flex justify-between">
-            <div>
-              キメ旅っ!
+          <div className="h-10 flex justify-between bg-amber-200">
+            <div className="p-3">
+              キメ旅っ!(まつばやしがロゴ作成した後にここに画像はいるよ)
             </div>
             <div>
-              <Avatar className="mt-1.5 mr-1.5">
+              <Avatar className="mb-1.5 mt-1 mr-1.5">
                 <AvatarImage src={session.user?.image ?? ""} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
