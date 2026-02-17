@@ -3,7 +3,13 @@ import { Geist, Geist_Mono, Noto_Sans } from "next/font/google";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { auth } from "@/auth"
 import { redirect } from "next/navigation";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+import UserMenu from "@/components/user-menu";
 const notoSans = Noto_Sans({ variable: '--font-sans' });
 
 const geistSans = Geist({
@@ -43,10 +49,7 @@ export default async function RootLayout({
               キメ旅っ!(まつばやしがロゴ作成した後にここに画像はいるよ)
             </div>
             <div>
-              <Avatar className="mb-1.5 mt-1 mr-1.5">
-                <AvatarImage src={session.user?.image ?? ""} />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
+              <UserMenu imageUrl={session.user?.image ?? ""} />
             </div>
           </div>
         </header>
