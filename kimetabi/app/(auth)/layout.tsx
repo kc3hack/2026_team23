@@ -44,7 +44,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <header>
-          <div className="h-10 flex justify-between bg-amber-200">
+          <div className="h-10 flex justify-between bg-primary">
             <div className="p-3">
               キメ旅っ!(まつばやしがロゴ作成した後にここに画像はいるよ)
             </div>

@@ -1,6 +1,6 @@
-import { auth, signOut } from "@/auth"
-import SignIn from "@/components/sign-in";
-import Image from "next/image";
+import { auth } from "@/auth"
+import AddnewProjectButton from "@/components/project/addnewProject";
+import MoveGroupButton from "@/components/project/moveGroupButton";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 
@@ -13,20 +13,17 @@ export default async function Home() {
   return (
     <div>
       <p>こんにちは、{session.user?.name}さん</p>
+      <div className="flex justify-between">
+        <div></div>
+        <div>
+          <MoveGroupButton />
+          <AddnewProjectButton />
+        </div>
+      </div>
+      <div>
+        ここに旅行の予定が表示されるつもり
+      </div>
 
-      <form
-        action={async () => {
-          "use server"
-          await signOut()
-        }}
-      >
-        <button type="submit" style={{ marginTop: '20px', padding: '8px 16px' }}>
-          ログアウト
-        </button>
-      </form>
-      <Button>
-        Hello
-      </Button>
 
     </div>
   );
