@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import UserMenu from "@/components/user-menu";
+import Image from "next/image";
 const notoSans = Noto_Sans({ variable: '--font-sans' });
 
 const geistSans = Geist({
@@ -44,9 +45,9 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <header>
-          <div className="h-10 flex justify-between bg-primary">
+          <div className=" flex justify-between bg-primary">
             <div className="p-3">
-              キメ旅っ!(まつばやしがロゴ作成した後にここに画像はいるよ)
+              <Image src="/logo.png" alt="logo" width={100} height={10} />
             </div>
             <div>
               <UserMenu imageUrl={session.user?.image ?? ""} />
