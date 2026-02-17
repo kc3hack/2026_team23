@@ -1,6 +1,7 @@
 import { auth, signOut } from "@/auth"
 import SignIn from "@/components/sign-in";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 export default async function Home() {
   const session = await auth()
@@ -9,12 +10,7 @@ export default async function Home() {
   return (
     <div>
       <p>こんにちは、{session.user?.name}さん</p>
-      <Image
-        src={session.user?.image ?? ""}
-        alt="ユーザーアイコン"
-        width={100}
-        height={100}
-      />
+
       <form
         action={async () => {
           "use server"
@@ -25,6 +21,9 @@ export default async function Home() {
           ログアウト
         </button>
       </form>
+      <Button>
+        Hello
+      </Button>
 
     </div>
   );
