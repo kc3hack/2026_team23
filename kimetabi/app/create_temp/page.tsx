@@ -1,4 +1,4 @@
-import { createProject } from "../actions/project";
+import { createProject } from "../../actions/project";
 // CreateProjectPage.ts
 import { prisma } from "@/lib/prisma"; // データベース接続をインポート
 import { auth } from "@/auth";
