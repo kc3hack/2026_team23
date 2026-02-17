@@ -2,11 +2,14 @@ import { auth, signOut } from "@/auth"
 import SignIn from "@/components/sign-in";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const session = await auth()
 
-  if (!session) return <SignIn />
+  if (!session) return (
+    redirect('/login')
+  )
   return (
     <div>
       <p>こんにちは、{session.user?.name}さん</p>
