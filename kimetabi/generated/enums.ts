@@ -32,3 +32,13 @@ export const GroupRole = {
 } as const
 
 export type GroupRole = (typeof GroupRole)[keyof typeof GroupRole]
+
+
+export const NotificationType = {
+  INVITATION: 'INVITATION',
+  REMIND: 'REMIND',
+  POINT: 'POINT',
+  SYSTEM: 'SYSTEM'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]

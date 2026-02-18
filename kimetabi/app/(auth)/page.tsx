@@ -1,7 +1,8 @@
 import { auth } from "@/auth"
+import { NotificationCancelButton } from "@/components/notification/NotificationCancelButton";
+import { NotificationPleaseButton } from "@/components/notification/PleaseNotificationButton";
 import AddnewProjectButton from "@/components/project/addnewProject";
 import MoveGroupButton from "@/components/project/moveGroupButton";
-import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
@@ -12,12 +13,15 @@ export default async function Home() {
   )
   return (
     <div>
+      <NotificationPleaseButton />
       <p>こんにちは、{session.user?.name}さん</p>
       <div className="flex justify-between">
-        <div></div>
-        <div>
+        <div className="mx-2 px-1">
           <MoveGroupButton />
           <AddnewProjectButton />
+        </div>
+        <div className="mx-5">
+          <NotificationCancelButton />
         </div>
       </div>
       <div>
