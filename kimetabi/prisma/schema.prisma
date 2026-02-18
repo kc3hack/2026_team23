@@ -12,7 +12,7 @@ generator client {
   provider = "prisma-client"
   output   = "../generated"
 
-  binaryTargets = ["native" ,"rshel-openssl-3.0x"]
+  binaryTargets = ["native" ,"rhel-openssl-3.0.x"]
 }
  
 model User {
