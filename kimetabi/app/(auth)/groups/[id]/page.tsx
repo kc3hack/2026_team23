@@ -1,7 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { auth } from "@/auth"; // auth.jsのパス
 import prisma from "@/lib/prisma"; // prismaのパス
-import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,8 +12,9 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, CirclePlus } from "lucide-react"; // アイコン用（lucide-reactはshadcnに同梱されています）
+import { CirclePlus } from "lucide-react"; // アイコン用（lucide-reactはshadcnに同梱されています）
 import { GroupOptionMenu } from "@/components/group/GroupOptionsMenu";
+import { BackpreviousButton } from "@/components/backprevious-button";
 
 
 type GroupDetailPageProps = {
@@ -65,14 +65,10 @@ export default async function groupdetailPage(props: GroupDetailPageProps) {
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-8">
       <div className="space-y-4 mb-5">
-        <Button variant="ghost" asChild className="ml-1 text-muted-foreground">
-          <Link href="/groups">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            グループ一覧へ戻る
-          </Link>
-        </Button>
+        <BackpreviousButton href="/groups" />
         <div className="flex justify-between">
           <h1 className="text-3xl font-bold tracking-tight">{group.name}</h1>
+          { }
           <GroupOptionMenu groupId={groupId} />
         </div>
       </div>
