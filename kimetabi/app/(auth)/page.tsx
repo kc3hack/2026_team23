@@ -1,7 +1,7 @@
 import { auth } from "@/auth"
+import NotificationToggle from "@/components/notification/notificationButton";
 import AddnewProjectButton from "@/components/project/addnewProject";
 import MoveGroupButton from "@/components/project/moveGroupButton";
-import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
@@ -12,6 +12,7 @@ export default async function Home() {
   )
   return (
     <div>
+      <NotificationToggle />
       <p>こんにちは、{session.user?.name}さん</p>
       <div className="flex justify-between">
         <div></div>

@@ -67,7 +67,17 @@ export function useNotificationManager() {
 
       // ★ Server Actionを呼び出してDBに保存！
       // Prismaを使ってPushSubscriptionテーブルに書き込む処理です
-      await saveSubscription(sub)
+      const subJSON = sub.toJSON()
+      if (!subJSON.endpoint || !subJSON.keys?.p256dh || !subJSON.keys?.auth) {
+        throw new Error("無効なデータが生成されました")
+      }
+      await saveSubscription({
+        endpoint: subJSON.endpoint,
+        keys: {
+          p256dh: subJSON.keys.p256dh,
+          auth: subJSON.keys.auth,
+        }
+      })
 
       setSubscription(sub)
     } catch (error) {

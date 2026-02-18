@@ -3,8 +3,18 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/auth"
 
+
+type SubscriptionJSON = {
+  endpoint: string,
+  keys: {
+    p256dh: string,
+    auth: string,
+  }
+}
+
+
 // 購読情報をDBに保存するアクション
-export async function saveSubscription(subscription: PushSubscription) {
+export async function saveSubscription(subscription: SubscriptionJSON) {
   const session = await auth()
   const userId = session?.user?.id
 
