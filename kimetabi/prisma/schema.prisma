@@ -26,6 +26,7 @@ model User {
   projects      ProjectMember[] 
   groupMembers GroupMember[]
   notifications Notification[]
+  pushSubscriptions PushSubscription[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -186,6 +187,21 @@ model Notification {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId]) // 高速化のためのインデックス
+}
+// 通知を購読しているかどうかの管理DB
+model PushSubscription {
+  id        String   @id @default(uuid())
+  userId    String
+  endpoint  String   // 必須: 通知の届け先URL
+  p256dh    String   // 必須: 暗号化キー
+  auth      String   // 必須: 認証シークレット
+  
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 同一ブラウザからの重複登録を防ぐ
+  @@unique([endpoint])
 }
 // --------------------------------------------------
 // Enum (列挙型) - 取りうる値を固定して安全にする
