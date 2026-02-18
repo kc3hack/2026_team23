@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans } from "next/font/google";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from "next/link";
 import { auth } from "@/auth"
 import { redirect } from "next/navigation";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
 import UserMenu from "@/components/user-menu";
 import Image from "next/image";
 const notoSans = Noto_Sans({ variable: '--font-sans' });
@@ -46,9 +40,11 @@ export default async function RootLayout({
       >
         <header>
           <div className=" flex justify-between bg-primary">
-            <div className="p-3">
-              <Image src="/logo.png" alt="logo" width={100} height={10} />
-            </div>
+            <Link href="/">
+              <div className="p-3">
+                <Image src="/logo.png" alt="logo" width={100} height={10} />
+              </div>
+            </Link>
             <div>
               <UserMenu imageUrl={session.user?.image ?? ""} />
             </div>
