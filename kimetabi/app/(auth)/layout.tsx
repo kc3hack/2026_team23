@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans } from "next/font/google";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { auth, signOut } from "@/auth"
+import Link from "next/link";
+import { auth } from "@/auth"
 import { redirect } from "next/navigation";
-
+import UserMenu from "@/components/user-menu";
+import Image from "next/image";
 const notoSans = Noto_Sans({ variable: '--font-sans' });
 
 const geistSans = Geist({
@@ -38,15 +39,14 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <header>
-          <div className="h-10 flex justify-between">
+          <div className=" flex justify-between bg-primary">
+            <Link href="/">
+              <div className="p-3">
+                <Image src="/logo.png" alt="logo" width={100} height={10} />
+              </div>
+            </Link>
             <div>
-              キメ旅っ!
-            </div>
-            <div>
-              <Avatar className="mt-1.5 mr-1.5">
-                <AvatarImage src={session.user?.image ?? ""} />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
+              <UserMenu imageUrl={session.user?.image ?? ""} />
             </div>
           </div>
         </header>
