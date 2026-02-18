@@ -14,6 +14,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, CirclePlus } from "lucide-react"; // アイコン用（lucide-reactはshadcnに同梱されています）
+import { GroupOptionMenu } from "@/components/group/GroupOptionsMenu";
+
 
 type GroupDetailPageProps = {
   params: Promise<{
@@ -69,8 +71,9 @@ export default async function groupdetailPage(props: GroupDetailPageProps) {
             グループ一覧へ戻る
           </Link>
         </Button>
-        <div>
+        <div className="flex justify-between">
           <h1 className="text-3xl font-bold tracking-tight">{group.name}</h1>
+          <GroupOptionMenu groupId={groupId} />
         </div>
       </div>
       {/*12カラムのグリッドコンテナでデザインしてみましょうか...やったことないけど。*/}
