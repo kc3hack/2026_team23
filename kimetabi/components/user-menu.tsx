@@ -11,7 +11,7 @@ import { logOut } from "@/actions/auth"
 
 
 
-export default function UserMenu({ imageUrl }: { imageUrl: string }) {
+export default function UserMenu({ imageUrl, username }: { imageUrl: string, username: string }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus:outline-none">
@@ -22,6 +22,9 @@ export default function UserMenu({ imageUrl }: { imageUrl: string }) {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">
+        <DropdownMenuItem>
+          {username}の設定(工事中)
+        </DropdownMenuItem>
         <DropdownMenuItem
           onClick={async () => {
             await logOut()
