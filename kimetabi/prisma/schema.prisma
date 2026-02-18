@@ -25,7 +25,7 @@ model User {
   Authenticator Authenticator[]
   projects      ProjectMember[] 
   groupMembers GroupMember[]
- 
+  notifications Notification[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

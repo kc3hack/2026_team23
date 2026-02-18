@@ -57,7 +57,8 @@ export const ModelName = {
   Project: 'Project',
   ProjectMember: 'ProjectMember',
   Group: 'Group',
-  GroupMember: 'GroupMember'
+  GroupMember: 'GroupMember',
+  Notification: 'Notification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -193,6 +194,20 @@ export const GroupMemberScalarFieldEnum = {
 } as const
 
 export type GroupMemberScalarFieldEnum = (typeof GroupMemberScalarFieldEnum)[keyof typeof GroupMemberScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  title: 'title',
+  message: 'message',
+  link: 'link',
+  isRead: 'isRead',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
 export const SortOrder = {
