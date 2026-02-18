@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { CirclePlus } from "lucide-react"; // アイコン用（lucide-reactはshadcnに同梱されています）
 import { GroupOptionMenu } from "@/components/group/GroupOptionsMenu";
 import { BackpreviousButton } from "@/components/backprevious-button";
+import { GroupMembersCard } from "@/components/groupcard";
 
 
 type GroupDetailPageProps = {
@@ -111,41 +112,7 @@ PC: 8列分
 のデザインでいく
         */}
         <div className="col-span-12 lg:col-span-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>メンバー</CardTitle>
-              <CardDescription>このグループに所属しているメンバー</CardDescription>
-            </CardHeader>
-
-            <CardContent className="p-0">
-              <ul className="divide-y">
-                {group.members.map((gm) => (
-                  <li key={gm.id} className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors">
-                    <div className="flex items-center space-x-4">
-                      <Avatar>
-                        <AvatarImage src={gm.user.image || ""} alt={gm.user.name || "User"} />
-                        <AvatarFallback>
-                          {gm.user.name ? gm.user.name.slice(0, 1).toUpperCase() : "?"}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <p className="font-medium leading-none">{gm.user.name || "名前未設定ユーザー"}</p>
-                        <p className="text-sm text-muted-foreground mt-1">{gm.user.email} </p>
-                      </div>
-                    </div>
-                    <div>
-                      {gm.role === "ADMIN" ? (
-                        <Badge variant="default">管理者</Badge>
-                      ) : (
-                        <Badge variant="secondary">メンバー</Badge>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-
-            </CardContent>
-          </Card>
+          <GroupMembersCard members={group.members} />
         </div>
       </div>
     </div>

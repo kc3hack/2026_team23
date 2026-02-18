@@ -147,7 +147,10 @@ export type AuthenticatorScalarFieldEnum = (typeof AuthenticatorScalarFieldEnum)
 export const ProjectScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  description: 'description',
   departureDate: 'departureDate',
+  endDate: 'endDate',
+  price: 'price',
   groupId: 'groupId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
