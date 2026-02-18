@@ -97,7 +97,9 @@ model Authenticator {
 model Project {
   id            String          @id @default(uuid())
   title         String          // 例: "卒業旅行", "冬の温泉" など
+  description   String
   departureDate DateTime        // 出発日程 (アプリ側で3ヶ月後にバリデーション)
+  endDate       DateTime
   
   //グループ情報追加
   groupId      String?
