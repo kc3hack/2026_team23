@@ -46,18 +46,20 @@ export default async function groupPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {userGroups.map((gm) => (
               <Card key={gm.id} className="hover:shadow-md transition-shadow">
-                <CardHeader>
-                  <CardTitle>{gm.group.name}</CardTitle>
-                  <CardDescription>
-                    あなたの役割: {gm.role === "ADMIN" ? "管理者" : "メンバー"}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {/* 説明文がない場合のフォールバックも用意しておくとUIが崩れません */}
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {gm.group.description || "グループの説明はありません"}
-                  </p>
-                </CardContent>
+                <Link href={`/groups/${gm.groupId}`}>
+                  <CardHeader>
+                    <CardTitle>{gm.group.name}</CardTitle>
+                    <CardDescription>
+                      あなたの役割: {gm.role === "ADMIN" ? "管理者" : "メンバー"}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {/* 説明文がない場合のフォールバックも用意しておくとUIが崩れません */}
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {gm.group.description || "グループの説明はありません"}
+                    </p>
+                  </CardContent>
+                </Link>
               </Card>
             ))}
           </div>
