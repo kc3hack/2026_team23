@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans } from "next/font/google";
-import "./globals.css";
-
+import Link from "next/link";
+import { auth } from "@/auth"
+import { redirect } from "next/navigation";
+import UserMenu from "@/components/user-menu";
+import Image from "next/image";
 const notoSans = Noto_Sans({ variable: '--font-sans' });
 
 const geistSans = Geist({
@@ -24,7 +27,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
+  const session = await auth()
+  if (!session) {
+    return redirect('/login')
+  }
 
   return (
     <html lang="en" className={notoSans.variable}>
@@ -32,6 +38,18 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <header>
+          <div className=" flex justify-between bg-primary">
+            <Link href="/">
+              <div className="p-3">
+                <Image src="/logo.png" alt="logo" width={100} height={10} />
+              </div>
+            </Link>
+            <div>
+              <UserMenu imageUrl={session.user?.image ?? ""} />
+            </div>
+          </div>
+        </header>
         {children}
       </body>
     </html>

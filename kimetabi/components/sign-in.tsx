@@ -5,7 +5,7 @@ export default function SignIn() {
     <form
       action={async () => {
         "use server"
-        await signIn("google") // "google"を指定して呼び出し
+        await signIn("google", { redirectTo: "/" }) // "google"を指定して呼び出し
       }}
     >
       <button type="submit">Googleでログイン</button>
