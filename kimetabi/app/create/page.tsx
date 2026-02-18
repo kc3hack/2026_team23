@@ -1,7 +1,14 @@
 "use client";
 
-import { createProject } from "../actions/project"; // 作成したアクションをインポート
+import { createProject } from "../../actions/project"; // 作成したアクションをインポート
 import { useState } from "react";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
+import { Slider } from "@/components/ui/slider"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+
 
 export default function CreateProjectForm() {
   const [loading, setLoading] = useState(false);
@@ -18,79 +25,89 @@ export default function CreateProjectForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10">
+    <div className="max-w mx-auto mt-10">
       <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-          新しい旅行を計画する ✈️
-        </h2>
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold text-gray-800 mb-6 text-center">
+            新しい旅行を計画する ✈️
+          </CardTitle>
+        </CardHeader>
 
         <form action={createProject} onSubmit={handleSubmit} className="space-y-6">
           {/* 旅行タイトル */}
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              旅行のタイトル
-            </label>
-            <input
-              name="title"
-              type="text"
-              required
-              placeholder="例: 北海道グルメツアー"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-            />
-          </div>
+          <Card>
+            <CardHeader>
+              <Label>
+               旅行のタイトル
+              </Label>
+            </CardHeader>
+            <CardContent>
+              <Input
+                name="tripName"
+                required
+                placeholder="例: 北海道グルメツアー"
+              />
+            </CardContent>
+          </Card>
 
           {/*　旅行詳細 */}
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <Card>
+            <CardHeader>
+              <Label>
                 旅行の詳細
-            </label>
-            <textarea
-              name="tripDetail"
-              placeholder="例：北海道のグルメを食べ歩きする旅です"
-              className="w-full min-h-[100px] px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+              </Label>
+            </CardHeader>
+            <CardContent>
+               <Textarea
+                name="tripDetail"
+                placeholder="例：北海道のグルメを食べ歩きする旅です"
               />
-          </div>
+            </CardContent> 
+          </Card>
 
           {/* 出発日 */}
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              出発予定日
-            </label>
-            <input
-              name="departureDate"
-              type="date"
-              required
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-            />
-          </div>
+          <Card>
+            <CardHeader>
+              <Label>
+                出発予定日
+              </Label>
+            </CardHeader>
+            <CardContent>
+               <Input
+                name="departureDate"
+                type="date"
+                required
+              />
+            </CardContent>
+          </Card>
 
           {/* 予算のスライダー */}
-          <div className="space-y-4">
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <Card>
+            <Label>
                 予算の範囲 <span className={`ml-2 text-xl font-mono ${budget >= 300000 ? 'text-gray-500 font-bold' : 'text-blue-600'}`}>
                              {budget >= 100000 ? "上限なし" : `¥${budget.toLocaleString()}`}
                           </span>
-            </label>
-            <input 
-              type="range"
-              min="0"
-              max="100000"
-              step="1000"
-              value={budget}
-              onChange={ (e) => setBudget(Number(e.target.value))}
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
+            </Label>
+            <CardContent>
+              <Slider
+              min={0}
+              max={100000}
+              step={1000}
+              value={[budget]}
+              onValueChange={ (vals) => setBudget(vals[0])}
+              className="w-full"
               style={{
                 background: `linear-gradient(to right, 
             #3b82f6 0%, 
             #ef4444 ${progress}%, 
             #e5e7eb ${progress}%, 
-            #e5e7eb 100%)`,}}>
-            </input>  
-          </div>
+            #e5e7eb 100%)`,}}/> 
+            </CardContent>
+          </Card>
           
 
           {/* 送信ボタン */}
-          <button
+          <Button
             type="submit"
             disabled={loading}
             className={`w-full py-4 rounded-xl text-white font-bold text-lg shadow-lg transition-all ${
@@ -100,7 +117,7 @@ export default function CreateProjectForm() {
             }`}
           >
             {loading ? "作成中..." : "プロジェクトを作成する"}
-          </button>
+          </Button>
         </form>
 
         <p className="mt-4 text-center text-sm text-gray-500">
