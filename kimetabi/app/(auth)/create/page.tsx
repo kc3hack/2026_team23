@@ -8,6 +8,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 import { Slider } from "@/components/ui/slider"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { BackpreviousButton } from "@/components/backprevious-button";
 
 
 export default function CreateProjectForm() {
@@ -15,6 +16,16 @@ export default function CreateProjectForm() {
 
   const [budget, setBudget] = useState(50000);//予算管理用のuseStateを設定
   const Maxbudget = 100000;
+
+  //予算のInputが変更されたときの処理
+  const handleInputChange =(e: React.ChangeEvent<HTMLInputElement>) =>{
+    const value = e.target.value.replace(/[^0-9]/g,"")//数字以外を除去
+    const numValue = value === "" ? 0 : Number(value)
+     //予算の入力最大値を制御
+    if(numValue <= Maxbudget){
+    setBudget(numValue)
+  }
+  }
 
   //０～１００パーセントの割合を計算
   const progress =(budget/Maxbudget)*100;
@@ -25,69 +36,78 @@ export default function CreateProjectForm() {
   };
 
   return (
-    <div className="max-w mx-auto mt-10">
-      <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-gray-800 mb-6 text-center">
-            新しい旅行を計画する ✈️
-          </CardTitle>
-        </CardHeader>
-
-        <form action={createProject} onSubmit={handleSubmit} className="space-y-6">
+    <div className="max-w mx-auto mt-10 relative">
+      <BackpreviousButton href="/"/>
+      <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold text-gray-800 mb-6 text-center">
+              新しい旅行を計画する ✈️
+            </CardTitle>
+          </CardHeader>
+          <form action={createProject} onSubmit={handleSubmit} className="space-y-6">
           {/* 旅行タイトル */}
-          <Card>
-            <CardHeader>
-              <Label>
+          <CardHeader>
+            <Label>
                旅行のタイトル
-              </Label>
-            </CardHeader>
-            <CardContent>
-              <Input
-                name="tripName"
-                required
-                placeholder="例: 北海道グルメツアー"
-              />
+            </Label>
+          </CardHeader>
+          <CardContent>
+            <Input
+              name="tripName"
+              required
+              placeholder="例: 北海道グルメツアー"
+            />
             </CardContent>
-          </Card>
 
-          {/*　旅行詳細 */}
-          <Card>
-            <CardHeader>
-              <Label>
-                旅行の詳細
-              </Label>
-            </CardHeader>
-            <CardContent>
-               <Textarea
-                name="tripDetail"
-                placeholder="例：北海道のグルメを食べ歩きする旅です"
-              />
-            </CardContent> 
-          </Card>
-
+        {/*　旅行詳細 */}
+        <div className="flex flex-col md : flex-row gap-4 px-6 py-2">
+            <div className="flex-1 space-y-2">
+            <Label>
+              旅行の詳細
+            </Label>
+            <Textarea
+              name="tripDetail"
+              placeholder="例：北海道のグルメを食べ歩きする旅です"
+              className="h-[120px]"
+            />
+          </div>
+            
           {/* 出発日 */}
-          <Card>
-            <CardHeader>
-              <Label>
-                出発予定日
-              </Label>
-            </CardHeader>
-            <CardContent>
-               <Input
-                name="departureDate"
-                type="date"
-                required
-              />
-            </CardContent>
-          </Card>
+          <div className="md : w-1/3 space-y-2">
+            <Label>
+              出発予定日
+            </Label>
+            <Input
+             name="departureDate"
+             type="date"
+             required
+            />
+          </div>
+        </div>
+          
+          
 
           {/* 予算のスライダー */}
-          <Card>
-            <Label>
-                予算の範囲 <span className={`ml-2 text-xl font-mono ${budget >= 100000 ? 'text-primary font-bold' : 'text-primary'}`}>
-                             {budget >= 100000 ? "上限なし" : `¥${budget.toLocaleString()}`}
-                          </span>
-            </Label>
+            <CardHeader>
+              <Label htmlFor="budget-input">  予算の範囲 </Label>
+              <Input id="budget-input"
+                     type="text"
+                     //表示のロジック：最大値以上なら「上限なし」そうでないならカンマ区切り
+                     value={budget >= Maxbudget ? "上限なし" : `¥${budget.toLocaleString()}`}
+
+                     //入力時
+                     onChange={handleInputChange}
+
+                     //クリックしたときは上限なしから数字に変更して表示
+                     onFocus = {(e) =>{
+                      if(budget >= Maxbudget){
+                        //文字列ではく「100000」と表示させる
+                        e.currentTarget.value = Maxbudget.toString();
+                      }
+                     }
+                    }
+                    className="w-1/6 font-mono text-xl text-primary" />
+            </CardHeader>
             <CardContent>
               <Slider
               min={0}
@@ -96,33 +116,29 @@ export default function CreateProjectForm() {
               value={[budget]}
               onValueChange={ (vals) => setBudget(vals[0])}
               className="w-full"
-              style={{
-                background: `linear-gradient(to right, 
-            #3b82f6 0%, 
-            #ef4444 ${progress}%, 
-            #e5e7eb ${progress}%, 
-            #e5e7eb 100%)`,}}/> 
+              /> 
             </CardContent>
-          </Card>
           
 
           {/* 送信ボタン */}
-          <Button
+          <CardContent>
+            <Button
             type="submit"
             disabled={loading}
-            className={`w-full py-4 rounded-xl text--primary-foreground font-bold text-lg shadow-lg transition-all ${
+            className={`w-full py-4 rounded-xl text-primary-foreground font-bold text-lg shadow-lg transition-all ${
               loading 
                 ? "bg-gray-400 cursor-not-allowed" 
-                : "bg-blue-600 hover:bg-blue-700 active:transform active:scale-95"
+                : "bg-primary hover:shadow-md active:transform active:scale-95"
             }`}
           >
             {loading ? "作成中..." : "プロジェクトを作成する"}
           </Button>
+          </CardContent>
+          
         </form>
-
+        </Card>
         <p className="mt-4 text-center text-sm text-gray-500">
           作成後、メンバーを招待できるようになります。
         </p>
-      </div>
     </div>
   );}
