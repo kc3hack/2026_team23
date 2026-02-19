@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
-import { redirect, useRouter } from "next/navigation"
+import { redirect } from "next/navigation"
 import Link from "next/link"
 import { searchUsersAction, createGroupAction } from "@/actions/group"
 import { Button } from "@/components/ui/button"
@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ArrowLeft, X, Search, Loader2 } from "lucide-react";
+import { ArrowLeft, X, Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type User = {
@@ -25,7 +25,6 @@ type User = {
 
 
 export default function Page() {
-  const router = useRouter()
   //フォームの状態管理
   const [groupName, setGroupName] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
