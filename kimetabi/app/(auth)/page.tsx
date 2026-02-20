@@ -4,6 +4,7 @@ import { NotificationCancelButton } from "@/components/notification/Notification
 import { NotificationPleaseButton } from "@/components/notification/PleaseNotificationButton";
 import AddnewProjectButton from "@/components/project/addnewProject";
 import MoveGroupButton from "@/components/project/moveGroupButton";
+import MyProjectsList from "@/components/project/MyProjectList";
 import TestMoveButton from "@/components/TestMoveButton";
 import { redirect } from "next/navigation";
 
@@ -28,15 +29,7 @@ export default async function Home() {
         </div>
       </div>
       <HostedProjects />
-      <div className="px-10 mt-3">
-        <div className="text-center py-20 border rounded-lg bg-muted/20 ">
-          <p className="text-muted-foreground">現在招待されている旅行はありません！</p>
-          <p className="text-sm text-muted-foreground mt-1">新しく作成するか、招待を受け取りましょう！</p>
-        </div>
-
-      </div>
-
-
+      <MyProjectsList />
     </div>
   );
 }
