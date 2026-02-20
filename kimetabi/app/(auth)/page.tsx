@@ -18,17 +18,23 @@ export default async function Home() {
     <div>
       <NotificationPleaseButton />
       <div className="flex justify-between">
-        <div className="mx-2 px-1">
+        <div className="mx-2 px-3 mt-4 flex ">
           <MoveGroupButton />
           <AddnewProjectButton />
         </div>
-        <div className="mx-5 flex pl-2">
+        <div className="mx-5 pl-2">
           <TestMoveButton />
           <NotificationCancelButton />
         </div>
       </div>
-      <HostedProjects />
-      <MyProjectsList />
+      <div className="grid grid-cols-12 gap-4">
+        <div className="col-span-12 lg:col-span-4 space-y-4">
+          <HostedProjects />
+        </div>
+        <div className="col-span-12 lg:col-span-8 space-y-4">
+          <MyProjectsList />
+        </div>
+      </div>
     </div>
   );
 }

@@ -6,6 +6,8 @@ import { notFound } from "next/navigation"
 import { updateParticipantStatus } from "@/actions/project"
 import { Button } from "@/components/ui/button"
 import IcsDownloadButton from "@/components/project/DownloadIcsFileButton"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { RemindButton } from "@/components/project/RemindButton"
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -61,18 +63,39 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
           <h2 className="text-2xl font-bold mb-4">👑 参加状況ダッシュボード</h2>
           <div className="bg-white shadow rounded-lg p-4">
             <ul className="space-y-3">
-              {project.members.map(member => (
-                <li key={member.id} className="flex justify-between items-center border-b pb-2">
-                  <span>{member.user.name || "名無しユーザー"}</span>
-                  <span className={`px-3 py-1 rounded-full text-sm font-bold ${member.status === 'ACCEPTED' ? 'bg-green-100 text-green-700' :
-                    member.status === 'DECLINED' ? 'bg-red-100 text-red-700' :
-                      'bg-yellow-100 text-yellow-700'
-                    }`}>
-                    {member.status === 'ACCEPTED' ? '参加' :
-                      member.status === 'DECLINED' ? '不参加' : '未回答 (PENDING)'}
-                  </span>
-                </li>
-              ))}
+              {project.members.map((member) => {
+
+                const isMe = member.userId === userId
+                return (
+                  <li key={member.id} className="flex justify-between items-center border-b pb-2">
+                    <div className="flex justify-center px-2">
+                      <Avatar>
+                        <AvatarImage src={member.user.image || undefined} />
+                        <AvatarFallback>{member.user.name?.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      <div className="ml-4 flex justify-center items-center text-sm">
+                        {member.user.name || "名無しユーザー"}
+                      </div>
+                    </div>
+                    <div>
+                      <span className={`px-3 py-1 rounded-full text-sm font-bold ${member.status === 'ACCEPTED' ? 'bg-green-100 text-green-700' :
+                        member.status === 'DECLINED' ? 'bg-red-100 text-red-700' :
+                          'bg-yellow-100 text-yellow-700'
+                        }`}>
+                        {member.status === 'ACCEPTED' ? '参加' :
+                          member.status === 'DECLINED' ? '不参加' : '未回答 (PENDING)'}
+
+                      </span>
+                      {member.status === "PENDING" && !isMe && (
+                        <RemindButton
+                          targetUserId={member.userId}
+                          targetUserName={member.user.name ?? ""}
+                          projectId={project.id}
+                        />)}
+                    </div>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         </div>
@@ -80,9 +103,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
         /* 招待された人 (PARTICIPANT) の場合のビュー */
         <div>
           <h2 className="text-2xl font-bold mb-4">✉️ 招待状</h2>
+          <div>
+            ここにメンバーが出る
 
+          </div>
           {myStatus === 'PENDING' ? (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+
               <p className="mb-6 text-lg">この旅行に参加しますか？</p>
               <div className="flex gap-4">
                 <form action={handleAccept}>

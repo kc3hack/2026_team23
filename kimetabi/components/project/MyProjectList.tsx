@@ -1,15 +1,11 @@
-// components/project/MyProjectsList.tsx
 import { auth } from "@/auth"
 import prisma from "@/lib/prisma"
 import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-
 export default async function MyProjectsList() {
   const session = await auth()
   const userId = session?.user?.id
-
   if (!userId) return null
-
   // PENDING(未回答)とACCEPTED(参加)の両方を取得 (DECLINEDは除外)
   const memberships = await prisma.projectMember.findMany({
     where: {
@@ -78,8 +74,8 @@ export default async function MyProjectsList() {
       {/* 🟢 参加予定の旅行セクション */}
       {acceptedProjects.length > 0 && (
         <section>
-          <h2 className="text-2xl font-bold mb-4 text-green-700">
-            🎒 参加予定の旅行
+          <h2 className="text-2xl font-bold mb-4 text-shadow-black">
+            参加予定の旅行
           </h2>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {acceptedProjects.map(({ project }) => (
