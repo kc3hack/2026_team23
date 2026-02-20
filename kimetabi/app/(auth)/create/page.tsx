@@ -82,20 +82,44 @@ export default function CreateProjectForm() {
             <Textarea
               name="tripDetail"
               placeholder="例：北海道のグルメを食べ歩きする旅です"
-              className="h-[120px]"
-            />
+              className="h-[120px]"/>
           </div>
             
           {/* 日程変更 */}
           <div className= "col-span-12 md:col-span-4 px-6 py-2 space-y-2">
             <Label>
-              出発予定日
+              旅行日程の選択
             </Label>
-            <Input
-             name="departureDate"
-             type="date"
-             required
-            />
+            <Popover>
+              <PopoverTrigger asChild>
+                <div className="relative cursor-pointer border border-border rounded-lg bg-muted hover:border-gray-700 transition-colors">
+                  <input readOnly
+                         value={date?.from?
+                               date.to?
+                               `${format(date.from!, "yyyy/MM/dd")}-${format(date.to!, "yyyy/MM/dd")}`
+                         :format(date.from!, "yyyy/MM/dd")
+                          :""}
+                         className={cn("w-full text-xl h-14 pl-12 cursor-pointer focus-visible:ring-0",
+                         !date&&"text-muted-foreground")}
+                         placeholder="日程を選択してください"/>
+                <CalendarIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-muted-foreground"/>
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-full p-0"
+                              align="start">
+                              <Calendar mode="range"
+                                        defaultMonth={date?.from}
+                                        selected={date}
+                                        onSelect={setDate}
+                                        numberOfMonths={2}/>
+              </PopoverContent>
+            </Popover>
+            <input type="hidden"
+                   name="departureDate"
+                   value={date?.from?.toISOString() || ""}/>
+            <input type="hidden"
+                   name="returnDate"
+                   value={date?.to?.toISOString() || ""}/>
           </div>
         </div>
         
@@ -154,4 +178,4 @@ export default function CreateProjectForm() {
           作成後、メンバーを招待できるようになります。
         </p>
     </div>
-  );}
+  )}
