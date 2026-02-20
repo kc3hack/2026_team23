@@ -1,4 +1,5 @@
 import { auth } from "@/auth"
+import HostedProjects from "@/components/main/HostedProjects";
 import { NotificationCancelButton } from "@/components/notification/NotificationCancelButton";
 import { NotificationPleaseButton } from "@/components/notification/PleaseNotificationButton";
 import AddnewProjectButton from "@/components/project/addnewProject";
@@ -26,6 +27,7 @@ export default async function Home() {
           <NotificationCancelButton />
         </div>
       </div>
+      <HostedProjects />
       <div className="px-10 mt-3">
         <div className="text-center py-20 border rounded-lg bg-muted/20 ">
           <p className="text-muted-foreground">現在招待されている旅行はありません！</p>
