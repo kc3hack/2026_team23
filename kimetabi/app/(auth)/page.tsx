@@ -17,7 +17,6 @@ export default async function Home() {
   return (
     <div>
       <NotificationPleaseButton />
-      <p>こんにちは、{session.user?.name}さん</p>
       <div className="flex justify-between">
         <div className="mx-2 px-1">
           <MoveGroupButton />
