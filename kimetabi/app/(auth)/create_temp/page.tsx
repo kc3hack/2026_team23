@@ -1,77 +1,99 @@
-import { createProject } from "@/actions/project";
-// CreateProjectPage.ts
-import { prisma } from "@/lib/prisma"; // データベース接続をインポート
-import { auth } from "@/auth";
+import { createProject } from "@/actions/project" // ※実際のパスに合わせて適宜変更してください
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import { auth } from "@/auth"
+import { prisma } from "@/lib/prisma"
 
-// 👇 async をつけて非同期コンポーネントにする
 export default async function CreateProjectPage() {
-  const session = await auth();
-  const userId = session?.user?.id;
+  // ログインユーザーの情報を取得
+  const session = await auth()
+  const userId = session?.user?.id
 
-  // 👇 画面を描画する前に、自分が所属しているグループ一覧を取得
-  const myGroups = userId
-    ? await prisma.group.findMany({
-      where: {
-        members: {
-          some: { userId: userId } // 自分がメンバーに含まれているグループだけを取得
-        }
-      }
-    })
-    : [];
+  if (!userId) {
+    return <div>ログインが必要です</div>
+  }
+
+  // ユーザーが所属しているグループを取得（セレクトボックス用）
+  const userGroups = await prisma.groupMember.findMany({
+    where: { userId: userId },
+    include: { group: true }
+  })
+
+  // 「3ヶ月後」のバリデーション用の最小日付を計算
+  const minDate = new Date()
+  minDate.setMonth(minDate.getMonth() + 3)
+  const minDateString = minDate.toISOString().split("T")[0]
 
   return (
-    <div style={{ padding: "20px", maxWidth: "400px", margin: "0 auto" }}>
-      <h2>✈️ 新しい旅行を企画する</h2>
+    <div className="max-w-2xl mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-6">新しい旅行を計画する</h1>
 
-      <form action={createProject} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+      <form action={createProject} className="space-y-6">
+        {/* タイトル */}
+        <div className="space-y-2">
+          <Label htmlFor="title">旅行のタイトル <span className="text-red-500">*</span></Label>
+          <Input id="title" name="title" required placeholder="例: 卒業旅行、冬の温泉" />
+        </div>
 
-        {/* ▼ グループ選択プルダウンを追加 ▼ */}
-        <div>
-          <label>参加するグループ（任意）</label><br />
+        {/* グループ選択 (任意) */}
+        <div className="space-y-2">
+          <Label htmlFor="groupId">グループ (任意)</Label>
           <select
+            id="groupId"
             name="groupId"
-            style={{ width: "100%", padding: "8px" }}
-            defaultValue=""
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <option value="">グループを指定しない（単発旅行）</option>
-            {myGroups.map((group) => (
-              <option key={group.id} value={group.id}>
-                {group.name}
+            <option value="">グループを指定しない (単発旅行)</option>
+            {userGroups.map((gm) => (
+              <option key={gm.groupId} value={gm.groupId}>
+                {gm.group.name}
               </option>
             ))}
           </select>
         </div>
-        {/* ▲ ここまで ▲ */}
 
-        <div>
-          <label>旅行のタイトル</label><br />
-          <input
-            type="text"
-            name="title"
-            placeholder="例：冬の温泉旅行"
-            required
-            style={{ width: "100%", padding: "8px" }}
-          />
+        {/* 日程 (出発日は3ヶ月後以降に制限) */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="departureDate">出発日 <span className="text-red-500">*</span></Label>
+            <Input
+              id="departureDate"
+              name="departureDate"
+              type="date"
+              required
+              min={minDateString} // 3ヶ月前のロック機能
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="endDate">終了日 <span className="text-red-500">*</span></Label>
+            <Input
+              id="endDate"
+              name="endDate"
+              type="date"
+              required
+              min={minDateString}
+            />
+          </div>
         </div>
 
-        <div>
-          <label>出発日</label><br />
-          <input
-            type="date"
-            name="departureDate"
-            required
-            style={{ width: "100%", padding: "8px" }}
-          />
+        {/* 予算 */}
+        <div className="space-y-2">
+          <Label htmlFor="price">おおよその予算 (円) <span className="text-red-500">*</span></Label>
+          <Input id="price" name="price" type="number" required placeholder="例: 50000" min="0" />
         </div>
 
-        <button
-          type="submit"
-          style={{ padding: "10px", backgroundColor: "#0070f3", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}
-        >
-          旅行を作成する！
-        </button>
+        {/* 説明 */}
+        <div className="space-y-2">
+          <Label htmlFor="description">旅行の説明やメモ</Label>
+          <Textarea id="description" name="description" placeholder="行きたい場所や目的などを自由に書いてください" />
+        </div>
+
+        <Button type="submit" className="w-full">
+          計画を作成してメンバーに通知する！
+        </Button>
       </form>
     </div>
   )
 }
-
