@@ -106,7 +106,9 @@ export default async function HostedProjects() {
                           {member.status === "PENDING" && <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">未回答</Badge>}
 
                         </div>
+
                       </li>
+
                     )
                   })}
                 </ul>

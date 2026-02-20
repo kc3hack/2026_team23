@@ -35,7 +35,7 @@ export default async function MyProjectsList() {
   const acceptedProjects = memberships.filter(m => m.status === 'ACCEPTED')
 
   return (
-    <div className="space-y-8 mb-8">
+    <div className="space-y-8 mb-8 ml-4 mr-4">
 
       {/* 🔴 未回答の招待セクション（目立たせる） */}
       {pendingProjects.length > 0 && (
