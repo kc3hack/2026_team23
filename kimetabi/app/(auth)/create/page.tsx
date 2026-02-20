@@ -8,15 +8,28 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 import { Slider } from "@/components/ui/slider"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+
 import { BackpreviousButton } from "@/components/backprevious-button";
+
+import {addDays, format} from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { DateRange } from "react-day-picker";
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 
 export default function CreateProjectForm() {
   const [loading, setLoading] = useState(false);
 
+  const [date, setDate] = useState< DateRange | undefined>({
+    from: new Date(), 
+    to: addDays(new Date(),7)//初期値は今日から7日間料
+  })
+
   const [budget, setBudget] = useState(50000);//予算管理用のuseStateを設定
   const Maxbudget = 100000;
-
+ 
   //予算のInputが変更されたときの処理
   const handleInputChange =(e: React.ChangeEvent<HTMLInputElement>) =>{
     const value = e.target.value.replace(/[^0-9]/g,"")//数字以外を除去
@@ -30,7 +43,7 @@ export default function CreateProjectForm() {
   //０～１００パーセントの割合を計算
   const progress =(budget/Maxbudget)*100;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async () => {
     // ボタンの連打防止
     setLoading(true);
   };
@@ -59,9 +72,10 @@ export default function CreateProjectForm() {
             />
             </CardContent>
 
-        {/*　旅行詳細 */}
-        <div className="flex flex-col md : flex-row gap-4 px-6 py-2">
-            <div className="flex-1 space-y-2">
+       
+          {/*　旅行詳細 */}
+        <div className="grid grid-cols-12 gap-4 px-6 py-2">
+            <div className="col-span-12 md:col-span-8 space-y-2">
             <Label>
               旅行の詳細
             </Label>
@@ -72,8 +86,8 @@ export default function CreateProjectForm() {
             />
           </div>
             
-          {/* 出発日 */}
-          <div className="md : w-1/3 space-y-2">
+          {/* 日程変更 */}
+          <div className= "col-span-12 md:col-span-4 px-6 py-2 space-y-2">
             <Label>
               出発予定日
             </Label>
@@ -84,12 +98,11 @@ export default function CreateProjectForm() {
             />
           </div>
         </div>
+        
           
-          
-
           {/* 予算のスライダー */}
             <CardHeader>
-              <Label htmlFor="budget-input">  予算の範囲 </Label>
+              <Label htmlFor="budget-input">  予算の目安　 </Label>
               <Input id="budget-input"
                      type="text"
                      //表示のロジック：最大値以上なら「上限なし」そうでないならカンマ区切り
@@ -106,7 +119,7 @@ export default function CreateProjectForm() {
                       }
                      }
                     }
-                    className="w-1/6 font-mono text-xl text-primary" />
+                    className="w-fit font-mono text-xl text-primary" />
             </CardHeader>
             <CardContent>
               <Slider
