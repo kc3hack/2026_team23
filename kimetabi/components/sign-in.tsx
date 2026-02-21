@@ -1,5 +1,5 @@
 // components/sign-in.tsx
-import { handleGoogleSignIn } from "@/lib/actions"; // 「一つ上の階層のlib」を指す
+import { handleGoogleSignIn } from "@/actions/google-auth.ts"; // 「一つ上の階層のlib」を指す
 
 export default function SignIn() {
   return (
