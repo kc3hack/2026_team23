@@ -41,6 +41,7 @@ export function DeleteProject({ tripId }: deleteProjectProps) {
                     プロジェクト削除
                 </DropdownMenuItem>
             </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu >
+        
     )
 }
