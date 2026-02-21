@@ -9,7 +9,7 @@ export default function SendNotificationToShunButton() {
   return (
     <div>
       <Button onClick={() => sendNotification({
-        userId: "cmlpy5qs40000tpus7t0rgefy", //安藤ID
+        userId: "", //安藤IDは削除しました
         title: "個別メッセージ",
         body: "しゅんのID指定の特別メッセージです",
 
@@ -19,4 +19,6 @@ export default function SendNotificationToShunButton() {
     </div>
   )
 }
+
+
 

@@ -22,7 +22,7 @@ export default function IcsDownloadButton({ project }: { project: ProjectProps }
 VERSION:2.0
 BEGIN:VEVENT
 SUMMARY:${project.title}
-DESCRIPTION:${project.description}
+DESCRIPTION:${project.description || ""}
 DTSTART:${formatDate(project.departureDate)}
 DTEND:${formatDate(project.endDate)}
 END:VEVENT
@@ -41,7 +41,7 @@ END:VCALENDAR`
 
   return (
     <Button onClick={downloadIcs} className="mt-4">
-      📅 カレンダーに追加する (ICS)
+      カレンダーに追加する
     </Button>
   )
 }
