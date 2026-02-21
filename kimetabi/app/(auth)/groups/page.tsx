@@ -27,7 +27,7 @@ export default async function groupPage() {
   })
 
   return (
-    <>
+    <div>
       <div className="p-6 max-w-5xl mx-auto space-y-6">
         <BackpreviousButton href="/" />
         <div className="flex items-center justify-between">
@@ -67,6 +67,6 @@ export default async function groupPage() {
           </div>
         )}
       </div>
-    </>
+    </div>
   )
 }

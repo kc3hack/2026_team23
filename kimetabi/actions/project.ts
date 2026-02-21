@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/auth"
 import { redirect } from "next/navigation"
+import { revalidatePath } from "next/cache"
 
 export async function createProject(formData: FormData) {
   //ログインしてるユーザーの情報を取得
@@ -72,4 +73,20 @@ export async function createProject(formData: FormData) {
   })
 
   redirect("/")
+}
+
+// 参加ステータスを更新する関数
+export async function updateParticipantStatus(projectId: string, userId: string, status: "ACCEPTED" | "DECLINED") {
+  await prisma.projectMember.update({
+    where: {
+      projectId_userId: {
+        projectId: projectId,
+        userId: userId
+      }
+    },
+    data: { status }
+  })
+
+  // 更新後にページを再検証して最新の状態を表示
+  revalidatePath(`/projects/${projectId}`)
 }
