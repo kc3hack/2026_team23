@@ -5,7 +5,6 @@ import { NotificationPleaseButton } from "@/components/notification/PleaseNotifi
 import AddnewProjectButton from "@/components/project/addnewProject";
 import MoveGroupButton from "@/components/project/moveGroupButton";
 import MyProjectsList from "@/components/project/MyProjectList";
-import TestMoveButton from "@/components/TestMoveButton";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
