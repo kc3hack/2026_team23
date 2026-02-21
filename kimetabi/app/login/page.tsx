@@ -70,7 +70,7 @@ export default function LoginPage() {
             
             <CardDescription className="text-base text-white/80 font-medium leading-relaxed tracking-wide">
               3ヶ月前からの準備で、<br />
-              最高の旅行を、最高の仲間と.
+              最高の旅行を、最高の仲間と。
             </CardDescription>
           </CardHeader>
 
