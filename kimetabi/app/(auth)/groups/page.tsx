@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { BackpreviousButton } from "@/components/backprevious-button"
 import CreateGroupButton from "@/components/group/CreateGroupButton"
+import { BackToSomewhereButton } from "@/components/backto-somewhere-button"
 
 export default async function groupPage() {
   const session = await auth()
@@ -30,7 +31,7 @@ export default async function groupPage() {
   return (
     <div>
       <div className="p-6 max-w-5xl mx-auto space-y-6">
-        <BackpreviousButton href="/" />
+        <BackToSomewhereButton href="/" />
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold tracking-tight">マイグループ</h1>
 

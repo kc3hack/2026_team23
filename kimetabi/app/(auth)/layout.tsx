@@ -49,7 +49,7 @@ export default async function RootLayout({
             <div className="flex items-center mr-2">
 
               <div className="flex items-center ">
-                <UserMenu imageUrl={session.user?.image ?? ""} username={session?.user?.name ?? "名前の取得に失敗しました"} />
+                <UserMenu imageUrl={session.user?.image ?? ""} username={session?.user?.name ?? "名前の取得に失敗しました"} userId={session.user?.id || ""} />
               </div>
             </div>
           </div>
