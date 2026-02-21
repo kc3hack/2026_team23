@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/auth"
 import { redirect } from "next/navigation"
+import { revalidatePath } from "next/cache"
 
 export async function createProject(formData: FormData) {
   //ログインしてるユーザーの情報を取得
@@ -16,6 +17,9 @@ export async function createProject(formData: FormData) {
   // 2.フォームから送信されたデータを受理
   const title = formData.get("title") as string
   const departureDate = formData.get("departureDate") as string
+  const endDate = formData.get("endDate") as string
+  const description = formData.get("description") as string
+  const price = formData.get("price") as string
   //追加でgroupIdも受け取る
   const groupId = formData.get("groupId") as string | null
 
@@ -56,8 +60,10 @@ export async function createProject(formData: FormData) {
     data: {
       title: title,
       departureDate: new Date(departureDate),
+      description: description,
+      endDate: new Date(endDate),
       groupId: groupId || null,
-
+      price: Number(price),
       members: {
         createMany: {
           data: membersData
@@ -67,4 +73,20 @@ export async function createProject(formData: FormData) {
   })
 
   redirect("/")
+}
+
+// 参加ステータスを更新する関数
+export async function updateParticipantStatus(projectId: string, userId: string, status: "ACCEPTED" | "DECLINED") {
+  await prisma.projectMember.update({
+    where: {
+      projectId_userId: {
+        projectId: projectId,
+        userId: userId
+      }
+    },
+    data: { status }
+  })
+
+  // 更新後にページを再検証して最新の状態を表示
+  revalidatePath(`/projects/${projectId}`)
 }

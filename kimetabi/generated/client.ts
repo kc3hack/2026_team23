@@ -89,3 +89,13 @@ export type Group = Prisma.GroupModel
  * 
  */
 export type GroupMember = Prisma.GroupMemberModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model PushSubscription
+ * 
+ */
+export type PushSubscription = Prisma.PushSubscriptionModel

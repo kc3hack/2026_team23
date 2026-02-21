@@ -9,8 +9,10 @@ datasource db {
 }
  
 generator client {
-  provider = "prisma-client"
-  output   = "../generated"
+  provider = "prisma-client-js"
+  //output   = "../generated"
+
+  binaryTargets = ["native" ,"rhel-openssl-3.0.x"]
 }
  
 model User {
@@ -25,7 +27,8 @@ model User {
   Authenticator Authenticator[]
   projects      ProjectMember[] 
   groupMembers GroupMember[]
- 
+  notifications Notification[]
+  pushSubscriptions PushSubscription[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -97,7 +100,10 @@ model Authenticator {
 model Project {
   id            String          @id @default(uuid())
   title         String          // 例: "卒業旅行", "冬の温泉" など
+  description   String
   departureDate DateTime        // 出発日程 (アプリ側で3ヶ月後にバリデーション)
+  endDate       DateTime
+  price         Int
   
   //グループ情報追加
   groupId      String?
@@ -168,7 +174,37 @@ model GroupMember {
   @@unique([groupId,userId])
 }
 
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String   // 通知を受け取るユーザー
+  type      NotificationType // 通知の種類（招待、更新など）
+  title     String   // 通知タイトル
+  message   String   // 通知内容
+  link      String?  // クリックした時の遷移先URL（例: /projects/123）
+  isRead    Boolean  @default(false) // 既読フラグ
 
+  createdAt DateTime @default(now())
+  
+  // リレーション定義
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId]) // 高速化のためのインデックス
+}
+// 通知を購読しているかどうかの管理DB
+model PushSubscription {
+  id        String   @id @default(uuid())
+  userId    String
+  endpoint  String   // 必須: 通知の届け先URL
+  p256dh    String   // 必須: 暗号化キー
+  auth      String   // 必須: 認証シークレット
+  
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 同一ブラウザからの重複登録を防ぐ
+  @@unique([endpoint])
+}
 // --------------------------------------------------
 // Enum (列挙型) - 取りうる値を固定して安全にする
 // --------------------------------------------------
@@ -186,4 +222,11 @@ enum Status {
 enum GroupRole {
   ADMIN   //グループの管理者
   MEMBER //招待を受けるメンバー
+}
+
+enum NotificationType {
+  INVITATION  // プロジェクトへの招待
+  REMIND      // 日程が近づいています
+  POINT       // 特定の誰かからつつかれたとき
+  SYSTEM      // システムからのお知らせ
 }

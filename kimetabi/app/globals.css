@@ -1,13 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@100;400;700;800&family=Noto+Sans+JP:wght@100..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans:
+    "LINE Seed JP", "Noto Sans JP", "ui-sans-serif", "system-ui", "sans-serif";
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -125,6 +126,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply font-sans bg-background text-foreground;
   }
 }
