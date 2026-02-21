@@ -29,7 +29,7 @@ export default async function Page(props: GroupIdProps) {
   })
   if (!group) notFound()
   return (
-    <div>
+    <div className="mx-7">
       <CreateProjectForm
         members={group.members}
         groupId={id}

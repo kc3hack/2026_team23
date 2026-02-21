@@ -56,6 +56,7 @@ export default async function RootLayout({
         </header>
         {children}
         <footer>
+          <div className="h-35" />
           <FloatingNav id={session.user?.id || ""} name={session.user?.name || ""} />
         </footer>
       </body>
