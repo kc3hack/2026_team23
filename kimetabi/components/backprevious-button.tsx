@@ -2,35 +2,24 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
-import { Button } from "./ui/button"
+import { useRouter } from "next/navigation"; // Next.jsのナビゲーション機能を使います
+import { ArrowLeft } from "lucide-react";
+import { Button } from "./ui/button";
 
-type buttonProps = {
-  href: string
-}
+// hrefを受け取る必要がなくなるので、Propsの定義（type buttonProps）は消してもOKです
 
-export function BackpreviousButton(Props: buttonProps) {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleClick = () => {
-    setIsLoading(true);
-  };
+export function BackpreviousButton() {
+  const router = useRouter(); // routerを使えるように宣言します
 
   return (
     <div>
-      <Button
-        variant="ghost"
-        asChild
+      <Button 
+        variant="ghost" 
         className="ml-1 text-muted-foreground"
-        disabled={isLoading}
-        onClick={handleClick}
-      >
-        <Link href={Props.href}>
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          {isLoading ? "移動中..." : "戻る"}
-        </Link>
+        onClick={() => router.back()} >
+        <ArrowLeft className="mr-2 h-4 w-4" />
+          戻る
       </Button>
     </div>
-  )
+  );
 }
-

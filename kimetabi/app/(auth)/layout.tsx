@@ -5,6 +5,7 @@ import { auth } from "@/auth"
 import { redirect } from "next/navigation";
 import UserMenu from "@/components/user-menu";
 import Image from "next/image";
+import FloatingNav from "@/components/BottomNavigationvar";
 const notoSans = Noto_Sans({ variable: '--font-sans' });
 
 const geistSans = Geist({
@@ -33,7 +34,7 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en" className={notoSans.variable}>
+    <html lang="ja" className={notoSans.variable} suppressHydrationWarning>
 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -45,12 +46,18 @@ export default async function RootLayout({
                 <Image src="/logo.png" alt="logo" width={100} height={20} />
               </div>
             </Link>
-            <div>
-              <UserMenu imageUrl={session.user?.image ?? ""} username={session?.user?.name ?? "名前の取得に失敗しました"} />
+            <div className="flex items-center mr-2">
+
+              <div className="flex items-center ">
+                <UserMenu imageUrl={session.user?.image ?? ""} username={session?.user?.name ?? "名前の取得に失敗しました"} userId={session.user?.id || ""} />
+              </div>
             </div>
           </div>
         </header>
         {children}
+        <footer>
+          <FloatingNav id={session.user?.id || ""} name={session.user?.name || ""} />
+        </footer>
       </body>
     </html>
   );
