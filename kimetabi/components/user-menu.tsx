@@ -8,10 +8,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { logOut } from "@/actions/auth"
+import Link from "next/link"
 
-
-
-export default function UserMenu({ imageUrl, username }: { imageUrl: string, username: string }) {
+export default function UserMenu({ imageUrl, username, userId }: { imageUrl: string, username: string , userId: string}) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus:outline-none">
@@ -22,9 +21,12 @@ export default function UserMenu({ imageUrl, username }: { imageUrl: string, use
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">
-        <DropdownMenuItem>
-          {username}の設定(工事中)
+        <DropdownMenuItem asChild className="cursor-pointer">
+          <Link href={`/${userId}`}>
+            {username}の設定
+          </Link>
         </DropdownMenuItem>
+
         <DropdownMenuItem
           onClick={async () => {
             await logOut()
