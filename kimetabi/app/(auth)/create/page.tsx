@@ -48,19 +48,9 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
   }
 
   //０～１００パーセントの割合を計算
-  const progress = (budget / Maxbudget) * 100;
 
   const [memberIds, setMemberIds] = useState<string[]>([]); // 取得したIDを保存する場所
-  const handleFetchMembers = async () => {
-    // ※ここで groupId を定義するか、引数で受け取る必要があります
-    const groupId = "テスト用のID";
-    try {
-      const ids = await getGroupMemberIds(groupId);
-      setMemberIds(ids);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+
 
 
   const handleSubmit = async () => {
@@ -69,8 +59,8 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
   };
 
   return (
-    <div className="max-w mx-auto mt-10 relative">
-      <BackpreviousButton href="/" />
+    <div className="max-w mx-auto mt-10 relative mr-5">
+      <BackpreviousButton />
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-gray-800 mb-6 text-center">
@@ -190,13 +180,13 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
           </div>
 
           {/* 送信ボタン */}
-          <CardContent> 
+          <CardContent>
             <Button
               type="submit"
               disabled={loading}
               className={`w-full py-4 rounded-xl text-primary-foreground font-bold text-lg shadow-lg transition-all ${loading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-primary hover:shadow-md active:transform active:scale-95"
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-primary hover:shadow-md active:transform active:scale-95"
                 }`}
             >
               {loading ? "作成中..." : "プロジェクトを作成する"}
