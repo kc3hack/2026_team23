@@ -54,7 +54,7 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
 
   return (
     <div className="max-w mx-auto mt-10 relative">
-      <BackpreviousButton/>
+      <BackpreviousButton />
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-gray-800 mb-6 text-center">
@@ -155,12 +155,10 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
           </CardContent>
 
           <div className="grid grid-cols-12 gap-6">
-            <div className="col-span-12 lg:col-span-4 space-y-4">
-              {/* 左側の概要カード（省略） */}
-            </div>
+
 
             {/* 右側カラム: メンバー一覧 */}
-            <div className="col-span-12 lg:col-span-8">
+            <div className="col-span-12 lg:col-span-12">
               {/* ★ ここがたった1行になります！ */}
               <MemberList members={members} />
             </div>

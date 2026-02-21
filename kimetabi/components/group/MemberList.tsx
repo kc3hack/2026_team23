@@ -23,7 +23,7 @@ type MemberListProps = {
 // 2. コンポーネント本体
 export function MemberList({ members }: MemberListProps) {
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>メンバー</CardTitle>
         <CardDescription>このグループに所属しているメンバー</CardDescription>
