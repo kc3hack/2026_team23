@@ -12,16 +12,27 @@ export default function MoveGroupButton() {
     redirect('/groups');
   };
 
+  const testTimeout = async () => {
+    setIsLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    setIsLoading(false);
+
+  };
   return (
-    <>
+    <div className="mr-2">
       <Button
-        className="bg-secondary text-secondary-foreground"
-        onClick={handleClick}
+        className="h-10 text-sm"
+        onClick={() => {
+          testTimeout()
+          handleClick()
+        }}
         disabled={isLoading}
       >
-        <UsersRound />
-        {isLoading ? "Loading..." : "グループ管理"}
+        <div className="flex flex-col justify-center items-center">
+          <UsersRound className="!h-7 !w-7" />
+          {isLoading ? "Loading..." : "グループ管理"}
+        </div>
       </Button>
-    </>
+    </div>
   )
 }

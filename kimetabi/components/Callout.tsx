@@ -1,5 +1,5 @@
 // components/Callout.tsx
-import { BadgeInfo, TriangleAlert, Skull, InfoIcon } from 'lucide-react';
+import { TriangleAlert, Skull, InfoIcon } from 'lucide-react';
 import { ReactNode } from 'react';
 type CalloutProps = {
   children: ReactNode;
