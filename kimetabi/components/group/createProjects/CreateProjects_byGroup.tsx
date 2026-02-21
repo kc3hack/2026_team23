@@ -54,7 +54,7 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
 
   return (
     <div className="max-w mx-auto mt-10 relative">
-      <BackpreviousButton href="/" />
+      <BackpreviousButton/>
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-gray-800 mb-6 text-center">
@@ -135,19 +135,10 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
             <Input id="budget-input"
               type="text"
               //表示のロジック：最大値以上なら「上限なし」そうでないならカンマ区切り
-              value={budget >= Maxbudget ? "上限なし" : `¥${budget.toLocaleString()}`}
+              value={`¥${budget.toLocaleString()}`}
 
               //入力時
               onChange={handleInputChange}
-
-              //クリックしたときは上限なしから数字に変更して表示
-              onFocus={(e) => {
-                if (budget >= Maxbudget) {
-                  //文字列ではく「100000」と表示させる
-                  e.currentTarget.value = Maxbudget.toString();
-                }
-              }
-              }
               className="w-fit font-mono text-xl text-primary" />
             <Input type="hidden" name="price" value={budget} />
             <Input type="hidden" name="groupId" value={groupId} />

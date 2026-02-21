@@ -40,12 +40,15 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
   //予算のInputが変更されたときの処理
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9]/g, "")//数字以外を除去
-    const numValue = value === "" ? 0 : Number(value)
-    //予算の入力最大値を制御
-    if (numValue <= Maxbudget) {
-      setBudget(numValue)
-    }
-  }
+    // 空っぽになったら 0 にする、数字があれば数値に変換してセットする
+  if (value === "") {
+    setBudget(0);
+  } else {
+    // 100000を超えて入力できないように制限をかけると親切です
+    const numericValue = Number(value);
+    setBudget(numericValue > Maxbudget ? Maxbudget : numericValue);
+  }}
+    
 
   //０～１００パーセントの割合を計算
   const progress = (budget / Maxbudget) * 100;
@@ -70,7 +73,7 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
 
   return (
     <div className="max-w mx-auto mt-10 relative">
-      <BackpreviousButton href="/" />
+      <BackpreviousButton />
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-gray-800 mb-6 text-center">
@@ -150,21 +153,11 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
             <Label htmlFor="budget-input">  予算の目安  </Label>
             <Input id="budget-input"
               type="text"
-              //表示のロジック：最大値以上なら「上限なし」そうでないならカンマ区切り
-              value={budget >= Maxbudget ? "上限なし" : `¥${budget.toLocaleString()}`}
-
+              value={`¥${budget.toLocaleString()}`}
               //入力時
               onChange={handleInputChange}
-
-              //クリックしたときは上限なしから数字に変更して表示
-              onFocus={(e) => {
-                if (budget >= Maxbudget) {
-                  //文字列ではく「100000」と表示させる
-                  e.currentTarget.value = Maxbudget.toString();
-                }
-              }
-              }
               className="w-fit font-mono text-xl text-primary" />
+              <input type="hidden" name="budget" value={budget} />
           </CardHeader>
           <CardContent>
             <Slider
@@ -184,7 +177,7 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
 
             {/* 右側カラム: メンバー一覧 */}
             <div className="col-span-12 lg:col-span-8">
-              {/* ★ ここがたった1行になります！ */}
+              {/*  ここがたった1行になります！ */}
               <MemberList members={members} />
             </div>
           </div>

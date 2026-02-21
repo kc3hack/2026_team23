@@ -56,6 +56,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
         <p className="font-semibold">
           日程: {project.departureDate.toLocaleDateString()} 〜 {project.endDate.toLocaleDateString()}
         </p>
+        <div className="text-black py-2 font-semibold">
+          予算の目安 : ￥{project.price}
+        </div>
       </div>
 
       {isMaster ? (
