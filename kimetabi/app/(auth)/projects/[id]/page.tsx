@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import IcsDownloadButton from "@/components/project/DownloadIcsFileButton"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { RemindButton } from "@/components/project/RemindButton"
+import { DeleteProject } from "@/components/project/delete_project"
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -60,6 +61,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
       {isMaster ? (
         /* 主催者 (MASTER) の場合のビュー */
         <div>
+          <DeleteProject tripId={project.id}/>
           <h2 className="text-2xl font-bold mb-4">👑 参加状況ダッシュボード</h2>
           <div className="bg-white shadow rounded-lg p-4">
             <ul className="space-y-3">
