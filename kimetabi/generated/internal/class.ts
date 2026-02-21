@@ -23,7 +23,7 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "/home/booto/develop/hackthon/2026_team23/kimetabi/generated",
+      "value": "/home/kouso/develop/2026_team23/kimetabi/generated",
       "fromEnvVar": null
     },
     "config": {
@@ -37,7 +37,7 @@ const config: runtime.GetPrismaClientConfig = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/booto/develop/hackthon/2026_team23/kimetabi/prisma/schema.prisma",
+    "sourceFilePath": "/home/kouso/develop/2026_team23/kimetabi/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../prisma",
@@ -47,6 +47,7 @@ const config: runtime.GetPrismaClientConfig = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
