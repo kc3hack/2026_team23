@@ -4,7 +4,8 @@ import prisma from "@/lib/prisma"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { BackToSomewhereButton } from "@/components/backto-somewhere-button"
+import { BackpreviousButton } from "@/components/backprevious-button"
+import CreateGroupButton from "@/components/group/CreateGroupButton"
 
 export default async function groupPage() {
   const session = await auth()
@@ -33,10 +34,7 @@ export default async function groupPage() {
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold tracking-tight">マイグループ</h1>
 
-          {/* ButtonのasChildを使うことで、中のLinkタグにButtonのスタイルを適用します */}
-          <Button asChild>
-            <Link href="/groups/create">＋ 新規グループ作成</Link>
-          </Button>
+          <CreateGroupButton />
         </div>
 
         {userGroups.length === 0 ? (

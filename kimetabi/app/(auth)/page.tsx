@@ -2,10 +2,7 @@ import { auth } from "@/auth"
 import HostedProjects from "@/components/main/HostedProjects";
 import { NotificationCancelButton } from "@/components/notification/NotificationCancelButton";
 import { NotificationPleaseButton } from "@/components/notification/PleaseNotificationButton";
-import AddnewProjectButton from "@/components/project/addnewProject";
-import MoveGroupButton from "@/components/project/moveGroupButton";
 import MyProjectsList from "@/components/project/MyProjectList";
-import TestMoveButton from "@/components/TestMoveButton";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
@@ -24,8 +21,6 @@ export default async function Home() {
       </div>
       <div className="flex justify-between">
         <div className="mx-2 px-3 mt-4 flex ">
-          <MoveGroupButton />
-          <AddnewProjectButton />
         </div>
         <div className="mx-5 pl-2">
         </div>

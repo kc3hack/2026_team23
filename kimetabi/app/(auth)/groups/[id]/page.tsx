@@ -2,17 +2,16 @@ import { notFound, redirect } from "next/navigation";
 import { auth } from "@/auth"; // auth.jsのパス
 import prisma from "@/lib/prisma"; // prismaのパス
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CirclePlus } from "lucide-react"; // アイコン用（lucide-reactはshadcnに同梱されています）
 import { GroupOptionMenu } from "@/components/group/GroupOptionsMenu";
 import { BackpreviousButton } from "@/components/backprevious-button";
 import { GroupMembersCard } from "@/components/groupcard";
+import CreateProjectByGroupButton from "@/components/group/createProjects/CreateProjects_byGroup-button";
 
 
 type GroupDetailPageProps = {
@@ -73,9 +72,7 @@ export default async function groupdetailPage(props: GroupDetailPageProps) {
       {/*12カラムのグリッドコンテナでデザインしてみましょうか...やったことないけど。*/}
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12 lg:col-span-4 space-y-4">
-          <Button className="w-full">
-            <CirclePlus className="mr-2 h-4 w-4" /> メンバーを招待する
-          </Button>
+          <CreateProjectByGroupButton groupId={groupId} />
           <Card>
             <CardHeader>
               <CardTitle>概要</CardTitle>
