@@ -1,10 +1,10 @@
 "use client";
 
-import { createProject } from "@/actions/project"; // 作成したアクションをインポート
+import { createProject } from "../../../actions/project"; // 作成したアクションをインポート
 import { useState } from "react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from "@/components/ui/card"
 import { Slider } from "@/components/ui/slider"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -18,8 +18,8 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-
 import { MemberList } from "@/components/group/MemberList";
+import { getGroupMemberIds } from "@/actions/members";
 import { Prisma } from "@prisma/client";
 type MemberWithUser = Prisma.GroupMemberGetPayload<{
   include: { user: true }
@@ -40,12 +40,31 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
   //予算のInputが変更されたときの処理
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9]/g, "")//数字以外を除去
-    const numValue = value === "" ? 0 : Number(value)
-    //予算の入力最大値を制御
-    if (numValue <= Maxbudget) {
-      setBudget(numValue)
+    // 空っぽになったら 0 にする、数字があれば数値に変換してセットする
+  if (value === "") {
+    setBudget(0);
+  } else {
+    // 100000を超えて入力できないように制限をかけると親切です
+    const numericValue = Number(value);
+    setBudget(numericValue > Maxbudget ? Maxbudget : numericValue);
+  }}
+    
+
+  //０～１００パーセントの割合を計算
+  const progress = (budget / Maxbudget) * 100;
+
+  const [memberIds, setMemberIds] = useState<string[]>([]); // 取得したIDを保存する場所
+  const handleFetchMembers = async () => {
+    // ※ここで groupId を定義するか、引数で受け取る必要があります
+    const groupId = "テスト用のID";
+    try {
+      const ids = await getGroupMemberIds(groupId);
+      setMemberIds(ids);
+    } catch (error) {
+      console.error(error);
     }
   }
+
 
   const handleSubmit = async () => {
     // ボタンの連打防止
@@ -70,7 +89,7 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
           </CardHeader>
           <CardContent>
             <Input
-              name="title"
+              name="tripName"
               required
               placeholder="例: 北海道グルメツアー"
             />
@@ -84,9 +103,9 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
                 旅行の詳細
               </Label>
               <Textarea
-                name="description"
+                name="tripDetail"
                 placeholder="例：北海道のグルメを食べ歩きする旅です"
-                className="h-[120px] resize-none [field-sizing:content]" />
+                className="h-[120px]" />
             </div>
 
             {/* 日程変更 */}
@@ -123,7 +142,7 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
                 name="departureDate"
                 value={date?.from?.toISOString() || ""} />
               <input type="hidden"
-                name="endDate"
+                name="returnDate"
                 value={date?.to?.toISOString() || ""} />
             </div>
           </div>
@@ -134,14 +153,11 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
             <Label htmlFor="budget-input">  予算の目安  </Label>
             <Input id="budget-input"
               type="text"
-              //表示のロジック：最大値以上なら「上限なし」そうでないならカンマ区切り
               value={`¥${budget.toLocaleString()}`}
-
               //入力時
               onChange={handleInputChange}
               className="w-fit font-mono text-xl text-primary" />
-            <Input type="hidden" name="price" value={budget} />
-            <Input type="hidden" name="groupId" value={groupId} />
+              <input type="hidden" name="budget" value={budget} />
           </CardHeader>
           <CardContent>
             <Slider
@@ -155,23 +171,25 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
           </CardContent>
 
           <div className="grid grid-cols-12 gap-6">
-
+            <div className="col-span-12 lg:col-span-4 space-y-4">
+              {/* 左側の概要カード（省略） */}
+            </div>
 
             {/* 右側カラム: メンバー一覧 */}
-            <div className="col-span-12 lg:col-span-12">
-              {/* ★ ここがたった1行になります！ */}
+            <div className="col-span-12 lg:col-span-8">
+              {/*  ここがたった1行になります！ */}
               <MemberList members={members} />
             </div>
           </div>
 
           {/* 送信ボタン */}
-          <CardContent>
+          <CardContent> 
             <Button
               type="submit"
               disabled={loading}
               className={`w-full py-4 rounded-xl text-primary-foreground font-bold text-lg shadow-lg transition-all ${loading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-primary hover:shadow-md active:transform active:scale-95"
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-primary hover:shadow-md active:transform active:scale-95"
                 }`}
             >
               {loading ? "作成中..." : "プロジェクトを作成する"}
@@ -180,6 +198,9 @@ export default function CreateProjectForm({ groupId, members }: { groupId: strin
 
         </form>
       </Card>
+      <p className="mt-4 text-center text-sm text-gray-500">
+        作成後、メンバーを招待できるようになります。
+      </p>
     </div>
   )
 }
