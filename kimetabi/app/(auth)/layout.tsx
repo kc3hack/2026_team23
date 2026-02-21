@@ -46,7 +46,11 @@ export default async function RootLayout({
               </div>
             </Link>
             <div>
-              <UserMenu imageUrl={session.user?.image ?? ""} username={session?.user?.name ?? "名前の取得に失敗しました"} />
+              <UserMenu 
+                imageUrl={session.user?.image ?? ""} 
+                username={session?.user?.name ?? "名前の取得に失敗しました"}
+                userId={session?.user?.id ?? ""}
+                />
             </div>
           </div>
         </header>
