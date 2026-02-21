@@ -2,9 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
-import { Button } from "./ui/button"
-
 import { useRouter } from "next/navigation"; // Next.jsのナビゲーション機能を使います
 import { ArrowLeft } from "lucide-react";
 import { Button } from "./ui/button";

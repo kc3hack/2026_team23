@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { BackpreviousButton } from "@/components/backprevious-button"
 import CreateGroupButton from "@/components/group/CreateGroupButton"
+import { BackToSomewhereButton } from "@/components/backto-somewhere-button"
 
 export default async function groupPage() {
   const session = await auth()
