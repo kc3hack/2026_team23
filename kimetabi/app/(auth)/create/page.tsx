@@ -4,27 +4,36 @@ import { createProject } from "../../../actions/project"; // 作成したアク�
 import { useState } from "react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from "@/components/ui/card"
 import { Slider } from "@/components/ui/slider"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 
 import { BackpreviousButton } from "@/components/backprevious-button";
 
-import {addDays, format} from "date-fns";
+import {addDays, format, addMonths} from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export default function CreateProjectForm() {
+import { MemberList } from "@/components/group/MemberList";
+import { getGroupMemberIds } from "@/actions/members";
+import { Prisma } from "@prisma/client";
+type MemberWithUser = Prisma.GroupMemberGetPayload<{
+  include: { user: true }
+}>;
+
+export default function CreateProjectForm({ groupId, members }: { groupId: string, members: MemberWithUser[] }) {
   const [loading, setLoading] = useState(false);
 
+  const minDate = addMonths(new Date(), 3);
   const [date, setDate] = useState< DateRange | undefined>({
-    from: new Date(), 
-    to: addDays(new Date(),7)//初期値は今日から7日間料
+    from: minDate, 
+    to: addDays(minDate,7)//初期値は三ヶ月後から7日間
   })
 
   const [budget, setBudget] = useState(50000);//予算管理用のuseStateを設定
@@ -42,6 +51,18 @@ export default function CreateProjectForm() {
 
   //０～１００パーセントの割合を計算
   const progress =(budget/Maxbudget)*100;
+
+  const [memberIds, setMemberIds] = useState<string[]>([]); // 取得したIDを保存する場所
+  const handleFetchMembers = async () => {
+  // ※ここで groupId を定義するか、引数で受け取る必要があります
+  const groupId = "テスト用のID"; 
+  try {
+    const ids = await getGroupMemberIds(groupId);
+    setMemberIds(ids);
+  } catch (error) {
+    console.error(error);
+  }}
+  
 
   const handleSubmit = async () => {
     // ボタンの連打防止
@@ -111,7 +132,8 @@ export default function CreateProjectForm() {
                                         defaultMonth={date?.from}
                                         selected={date}
                                         onSelect={setDate}
-                                        numberOfMonths={2}/>
+                                        numberOfMonths={2}
+                                        disabled={{ before: minDate }}/>
               </PopoverContent>
             </Popover>
             <input type="hidden"
@@ -126,7 +148,7 @@ export default function CreateProjectForm() {
           
           {/* 予算のスライダー */}
             <CardHeader>
-              <Label htmlFor="budget-input">  予算の目安　 </Label>
+              <Label htmlFor="budget-input">  予算の目安  </Label>
               <Input id="budget-input"
                      type="text"
                      //表示のロジック：最大値以上なら「上限なし」そうでないならカンマ区切り
@@ -155,8 +177,19 @@ export default function CreateProjectForm() {
               className="w-full"
               /> 
             </CardContent>
-          
 
+          <div className="grid grid-cols-12 gap-6">
+        <div className="col-span-12 lg:col-span-4 space-y-4">
+          {/* 左側の概要カード（省略） */}
+        </div>
+
+        {/* 右側カラム: メンバー一覧 */}
+        <div className="col-span-12 lg:col-span-8">
+          {/* ★ ここがたった1行になります！ */}
+          <MemberList members={members} />
+        </div> 
+      </div>
+     
           {/* 送信ボタン */}
           <CardContent>
             <Button
