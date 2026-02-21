@@ -1,5 +1,5 @@
 // ./prisma.ts (または ./lib/prisma.ts)
-import { PrismaClient } from "../generated/client" // 標準のクライアント
+import { PrismaClient } from "@prisma/client" // 標準のクライアント
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 

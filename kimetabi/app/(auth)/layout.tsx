@@ -42,11 +42,11 @@ export default async function RootLayout({
           <div className=" flex justify-between bg-primary">
             <Link href="/">
               <div className="p-3">
-                <Image src="/logo.png" alt="logo" width={100} height={10} />
+                <Image src="/logo.png" alt="logo" width={100} height={20} />
               </div>
             </Link>
             <div>
-              <UserMenu imageUrl={session.user?.image ?? ""} />
+              <UserMenu imageUrl={session.user?.image ?? ""} username={session?.user?.name ?? "名前の取得に失敗しました"} />
             </div>
           </div>
         </header>

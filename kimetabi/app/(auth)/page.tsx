@@ -1,7 +1,9 @@
 import { auth } from "@/auth"
+import { NotificationCancelButton } from "@/components/notification/NotificationCancelButton";
+import { NotificationPleaseButton } from "@/components/notification/PleaseNotificationButton";
 import AddnewProjectButton from "@/components/project/addnewProject";
 import MoveGroupButton from "@/components/project/moveGroupButton";
-import { Button } from "@/components/ui/button";
+import TestMoveButton from "@/components/TestMoveButton";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
@@ -12,16 +14,24 @@ export default async function Home() {
   )
   return (
     <div>
+      <NotificationPleaseButton />
       <p>こんにちは、{session.user?.name}さん</p>
       <div className="flex justify-between">
-        <div></div>
-        <div>
+        <div className="mx-2 px-1">
           <MoveGroupButton />
           <AddnewProjectButton />
         </div>
+        <div className="mx-5 flex pl-2">
+          <TestMoveButton />
+          <NotificationCancelButton />
+        </div>
       </div>
-      <div>
-        ここに旅行の予定が表示されるつもり
+      <div className="px-10 mt-3">
+        <div className="text-center py-20 border rounded-lg bg-muted/20 ">
+          <p className="text-muted-foreground">現在招待されている旅行はありません！</p>
+          <p className="text-sm text-muted-foreground mt-1">新しく作成するか、招待を受け取りましょう！</p>
+        </div>
+
       </div>
 
 

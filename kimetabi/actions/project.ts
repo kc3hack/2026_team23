@@ -16,6 +16,9 @@ export async function createProject(formData: FormData) {
   // 2.フォームから送信されたデータを受理
   const title = formData.get("title") as string
   const departureDate = formData.get("departureDate") as string
+  const endDate = formData.get("endDate") as string
+  const description = formData.get("description") as string
+  const price = formData.get("price") as string
   //追加でgroupIdも受け取る
   const groupId = formData.get("groupId") as string | null
 
@@ -56,8 +59,10 @@ export async function createProject(formData: FormData) {
     data: {
       title: title,
       departureDate: new Date(departureDate),
+      description: description,
+      endDate: new Date(endDate),
       groupId: groupId || null,
-
+      price: Number(price),
       members: {
         createMany: {
           data: membersData
