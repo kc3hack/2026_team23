@@ -26,22 +26,29 @@ export function DeleteProject({ tripId }: deleteProjectProps) {
     }
 
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="ghost"
-                    size="icon"
-                    disabled={isPending}>
-                    <MoreHorizontal className="mr-2 h-8 w-8" />
-                    <span className="sr-only">メニューを開く</span>
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={handleDelete} className="text-red cursor-pointer">
-                    <Trash className="mr-2 h-4 w-4" />
-                    プロジェクト削除
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu >
-        
+        <div className="flex justfy-between">
+            <div>
+            </div>
+            <div>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost"
+                            size="icon"
+                            disabled={isPending}>
+                            <MoreHorizontal className="mr-2 h-8 w-8" />
+                            <span className="sr-only">メニューを開く</span>
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem onSelect={handleDelete} className="text-red-600 cursor-pointer">
+                            <Trash className="mr-2 h-4 w-4" />
+                            プロジェクト削除
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu >
+            </div>
+        </div>
+
+
     )
 }

@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { GroupMember, User } from "@prisma/client";
 import { Prisma } from "@prisma/client";
 
 // 1. 親（ページ）から受け取る「members」のデータの形（型）を定義します

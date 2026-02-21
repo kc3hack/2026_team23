@@ -18,8 +18,6 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 import { MemberList } from "@/components/group/MemberList";
 import { getGroupMemberIds } from "@/actions/members";
 import { Prisma } from "@prisma/client";
