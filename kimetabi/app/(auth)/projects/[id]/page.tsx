@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import IcsDownloadButton from "@/components/project/DownloadIcsFileButton"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { RemindButton } from "@/components/project/RemindButton"
+import { DeleteProject } from "@/components/project/delete_project"
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -59,7 +60,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
 
       {isMaster ? (
         /* 主催者 (MASTER) の場合のビュー */
-        <div>
+        <div className="relative">
+          <div className="absolute right-3">
+            <DeleteProject tripId={project.id} />
+          </div>
           <h2 className="text-2xl font-bold mb-4">👑 参加状況ダッシュボード</h2>
           <div className="bg-white shadow rounded-lg p-4">
             <ul className="space-y-3">
@@ -104,7 +108,40 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
         <div>
           <h2 className="text-2xl font-bold mb-4">✉️ 招待状</h2>
           <div>
-            ここにメンバーが出る
+            {/* 右側カラム: メンバー一覧 */}
+            <div className="col-span-12 lg:col-span-8 mb-6">
+              <h3 className="text-lg font-bold mb-3">参加予定メンバー</h3>
+
+              {/* ここから直接 project.members を展開（ループ）する */}
+              <ul className="bg-white shadow-sm border rounded-lg p-4 space-y-3">
+                {project.members.map((member) => (
+                  <li key={member.id} className="flex items-center gap-3 border-b last:border-0 pb-2 last:pb-0">
+
+                    {/* アバター画像 */}
+                    <Avatar className="h-10 w-10">
+                      <AvatarImage src={member.user.image || undefined} />
+                      <AvatarFallback>{member.user.name?.charAt(0) || "?"}</AvatarFallback>
+                    </Avatar>
+
+                    {/* 名前とステータス */}
+                    <div className="flex flex-col">
+                      <span className="font-medium text-sm">
+                        {member.user.name || "名無しユーザー"}
+                        {member.userId === userId && " (あなた)"} {/* 自分なら(あなた)と表示 */}
+                      </span>
+                      <span className={`text-xs font-bold ${member.status === 'ACCEPTED' ? 'text-green-600' :
+                          member.status === 'DECLINED' ? 'text-red-600' :
+                            'text-gray-400'
+                        }`}>
+                        {member.status === 'ACCEPTED' ? '🟢 参加' :
+                          member.status === 'DECLINED' ? '🔴 不参加' : '⚪️ 未回答'}
+                      </span>
+                    </div>
+
+                  </li>
+                ))}
+              </ul>
+            </div>
 
           </div>
           {myStatus === 'PENDING' ? (
