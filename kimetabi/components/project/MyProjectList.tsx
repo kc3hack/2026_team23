@@ -25,7 +25,7 @@ export default async function MyProjectsList() {
   if (memberships.length === 0) {
     return (
       <div className="text-gray-500 text-center py-8">
-        現在、予定されている旅行や招待はありません。左上のボタンから新しい旅行を企画してみましょう！
+        現在、予定されている旅行や招待はありません。下のGroupボタンから新しい旅行を企画してみましょう！
       </div>
     )
   }
