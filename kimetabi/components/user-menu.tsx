@@ -8,9 +8,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { logOut } from "@/actions/auth"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useTransition } from "react"
 
-export default function UserMenu({ imageUrl, username, userId }: { imageUrl: string, username: string , userId: string}) {
+export default function UserMenu({ imageUrl, username, userId }: { imageUrl: string, username: string, userId: string }) {
+  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus:outline-none">
@@ -22,9 +25,13 @@ export default function UserMenu({ imageUrl, username, userId }: { imageUrl: str
 
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild className="cursor-pointer">
-          <Link href={`/${userId}`}>
+          <div
+            onClick={() => startTransition(() => {
+              router.push(`/${userId}` || "/")
+            }
+            )}>
             {username}の設定
-          </Link>
+          </div>
         </DropdownMenuItem>
 
         <DropdownMenuItem
