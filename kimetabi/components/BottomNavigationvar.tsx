@@ -2,7 +2,9 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, UsersRound, Settings } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { Home, UsersRound, Settings, Loader2 } from "lucide-react"
+import { useTransition } from "react"
 
 type FloatNavProps = {
   id: string,
@@ -11,6 +13,8 @@ type FloatNavProps = {
 
 export default function FloatingNav(Props: FloatNavProps) {
   const pathname = usePathname()
+  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const navItems = [
     { title: "Group", href: "/groups", icon: UsersRound },
@@ -33,24 +37,39 @@ export default function FloatingNav(Props: FloatNavProps) {
               : pathname?.startsWith(item.href)
 
             return (
-              <Link key={item.title} href={item.href}>
-                <button
-                  title={item.title}
-                  className={`
+              <button
+                key={item.title}
+                title={item.title}
+                disabled={isPending}
+                onClick={() => {
+                  startTransition(() => {
+                    router.push(item.href)
+                  })
+                }}
+                className={`
                     flex flex-col items-center justify-center w-20 h-20 rounded-full transition-all duration-300 focus:outline-none
                     ${isActive
-                      // 選択時：白色っぽく(bg-white/95) + キメ旅カラーの文字 + 画像のようなへこんだ影
-                      ? "bg-white/95 text-primary shadow-[inset_2px_2px_6px_rgba(0,0,0,0.15)] scale-95"
-                      // 通常時：透明感のある白文字 + ホバーで少し背景を明るく
-                      : "text-white/80 hover:bg-white/10 hover:text-white"
-                    }
+                    // 選択時：白色っぽく(bg-white/95) + キメ旅カラーの文字 + 画像のようなへこんだ影
+                    ? "bg-white/95 text-primary shadow-[inset_2px_2px_6px_rgba(0,0,0,0.15)] scale-95"
+                    // 通常時：透明感のある白文字 + ホバーで少し背景を明るく
+                    : "text-white/80 hover:bg-white/10 hover:text-white"
+                  }
                   `}
-                >
-                  {/* アイコンとテキストのバランスを微調整 */}
-                  <item.icon className="w-7 h-7 mb-1" />
-                  <span className="text-[12px] font-bold tracking-wider">{item.title}</span>
-                </button>
-              </Link>
+              >
+                {isPending ? (<div>
+                  {isActive && (
+                    <div className="flex justify-center items-center">
+
+                      <Loader2 />
+                    </div>
+                  )}
+                </div>) : (
+                  <div className="flex flex-col justify-center items-center">
+
+                    <item.icon className="w-7 h-7 mb-1" />
+                    <span className="text-[12px] font-bold tracking-wider">{item.title}</span>
+                  </div>)}
+              </button>
             )
           })}
 

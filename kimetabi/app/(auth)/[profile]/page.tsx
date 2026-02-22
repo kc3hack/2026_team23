@@ -34,8 +34,8 @@ export default async function ProfilePage(props: ProfilePageProps) {
     // 画面中央に寄せるためのコンテナ
     <div className="container mx-auto p-6 max-w-md">
       {/* 3. 戻るボタンをカードの上に配置 */}
-      <div className="mb-6">
-        <BackpreviousButton/>
+      <div className="mb-2">
+        <BackpreviousButton />
       </div>
 
       <Card className="shadow-lg">
