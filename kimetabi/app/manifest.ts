@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "キメ旅っ！",
-    short_name: "TripScheduleApp",
+    short_name: "キメ旅",
     description: "旅行の日程を簡潔に確定させましょう",
     start_url: "/",
     display: "standalone",

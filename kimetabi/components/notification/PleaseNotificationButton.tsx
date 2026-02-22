@@ -21,7 +21,9 @@ export function NotificationPleaseButton() {
   if (!isSupported) {
     return (
       <Callout type="danger" >
-        お使いのブラウザは通知をサポートしていません。ごめんね。
+        <div>
+          ブラウザ右上または右下の...をタップしてアプリをインストールしましょう！
+        </div>
       </Callout>
     )
   }
